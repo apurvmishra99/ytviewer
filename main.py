@@ -29,7 +29,8 @@ def bot(url):
 			driver.get(args.url)
 			sleep(args.duration)
 			driver.close()
-	except:
+	except Exception as e:
+		print(e)
 		_exit(0)
 
 if args.proxies:
