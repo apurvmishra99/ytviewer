@@ -18,7 +18,6 @@ args=parser.parse_args()
 
 def bot(url):
 	try:
-		a=b
 		while True:
 			proxy.http_proxy=choice(proxies)
 			proxy.ssl_proxy=proxy.http_proxy
