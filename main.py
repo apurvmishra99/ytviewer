@@ -3,14 +3,12 @@ import requests
 from os import _exit
 from time import sleep
 from random import choice,uniform
-from logging import WARNING
 from argparse import ArgumentParser
 from threading import Thread
 from traceback import print_exc
 from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.webdriver.common.proxy import Proxy,ProxyType
-from selenium.webdriver.remote.remote_connection import LOGGER
 
 parser=ArgumentParser()
 parser.add_argument('-t','--threads',type=int,help='number of threads',default=15)
@@ -38,7 +36,6 @@ def bot(url):
 		_exit(1)
 
 try:
-	LOGGER.setLevel(WARNING)
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().split('\n')
 	else:
