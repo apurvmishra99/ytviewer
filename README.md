@@ -13,7 +13,7 @@ Install Python(3+): https://www.python.org/downloads/
 Install required libraries:
 
 ```
-$ pip install -r requirements.txt
+$ python -m pip install -r requirements.txt
 ```
 
 Download **ChromeDriver** and move the executable to folder in your PATH: http://chromedriver.chromium.org/downloads
@@ -25,7 +25,7 @@ Install **Google Chrome Browser**: https://www.google.com/chrome/
 ```
 $ sudo apt update && sudo apt upgrade -y
 $ sudo apt install chromium python -y
-$ pip install -r requirements.txt
+$ python -m pip install -r requirements.txt
 ```
 
 ## Installation
