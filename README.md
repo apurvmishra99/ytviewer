@@ -8,7 +8,7 @@
 
 ### Windows
 
-Install Python(3+): https://www.python.org/downloads/
+Install Python: https://www.python.org/downloads/
 
 Install required libraries:
 
