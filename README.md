@@ -16,6 +16,8 @@ Install required libraries:
 $ pip install -r requirements.txt
 ```
 
+Download **ChromeDriver** and move the executable to folder in your PATH: http://chromedriver.chromium.org/downloads
+
 ### Linux
 
 ```
@@ -23,6 +25,8 @@ $ sudo apt update && sudo apt upgrade -y
 $ sudo apt install python -y
 $ pip install -r requirements.txt
 ```
+
+Download **ChromeDriver** and move the executable to folder in your PATH: http://chromedriver.chromium.org/downloads
 
 ## Installation
 
