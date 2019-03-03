@@ -3,11 +3,14 @@ import requests
 from os import _exit
 from time import sleep
 from random import choice,uniform
-from threading import Thread
+from logging import WARNING
 from argparse import ArgumentParser
+from threading import Thread
+from traceback import print_exc
+from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.webdriver.common.proxy import Proxy,ProxyType
-from fake_useragent import UserAgent
+from selenium.webdriver.remote.remote_connection import LOGGER
 
 parser=ArgumentParser()
 parser.add_argument('-t','--threads',type=int,help='number of threads',default=15)
@@ -27,13 +30,15 @@ def bot(url):
 			proxy.add_to_capabilities(capabilities)
 			driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
 			driver.get(args.url)
-			sleep(args.duration)
+			sleep(float(args.duration))
 			driver.close()
-	except Exception as e:
-		print(e)
+	except KeyboardInterrupt:_exit(0)
+	except Exception:
+		print_exc()
 		_exit(1)
 
 try:
+	LOGGER.setLevel(WARNING)
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().split('\n')
 	else:
@@ -50,6 +55,7 @@ try:
 		t.deamon=True
 		t.start()
 		sleep(uniform(1.5,3.0))
-except Exception as e:
-	print(e)
+except KeyboardInterrupt:_exit(0)
+except Exception:
+	print_exc()
 	_exit(1)
