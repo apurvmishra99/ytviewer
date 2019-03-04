@@ -28,6 +28,14 @@ $ sudo apt install chromium python -y
 $ python -m pip install -r requirements.txt
 ```
 
+### MacOS
+
+```
+$ brew update && brew upgrade
+$ brew install python
+$ python -m pip instal -r requirements.txt
+```
+
 ## Installation
 
 Clone this repository:
