@@ -51,7 +51,7 @@ try:
 		t=Thread(target=bot,args=(args.url,))
 		t.deamon=True
 		t.start()
-		sleep(uniform(1.5,3.0))
+		sleep(uniform(2.0,4.0))
 except KeyboardInterrupt:_exit(0)
 except Exception:
 	print_exc()
