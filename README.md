@@ -54,7 +54,7 @@ Run bot on **URL**:
 
 Set number of threads to **T** (default: 15):
 
-`$ main.py --url URL threads T`
+`$ main.py --url URL --threads T`
 
 Set duration of view to **S** seconds (default: 300 (5 minutes)):
 
