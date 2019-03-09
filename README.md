@@ -44,25 +44,25 @@ Clone this repository:
 
 ## Usage
 
-Help:
+Show help:
 
 `$ main.py --help`
 
-Run bot on \<url\>:
+Run bot on **URL**:
 
-`$ main.py --url <url>`
+`$ main.py --url URL`
 
-Set number of threads (default: 15):
+Set number of threads to **T** (default: 15):
 
-`$ main.py --url <url> --threads <threads>`
+`$ main.py --url URL threads T`
 
-Set duration of view in seconds (default: 5 minutes):
+Set duration of view to **S** seconds (default: 300 (5 minutes)):
 
-`$ main.py --url <url> --duration <duration>`
+`$ main.py --url URL --duration S`
 
-Set proxies file (default: proxies loaded from web)
+Set proxies filepath to **PATH** (default: proxies loaded from web)
 
-`$ main.py --url <url> --proxies <proxies>`
+`$ main.py --url URL --proxies PATH`
 
 ## Authors
 
