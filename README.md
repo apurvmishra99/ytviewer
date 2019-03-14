@@ -10,9 +10,7 @@ Install Python: https://www.python.org/downloads/
 
 Install required libraries:
 
-```
-$ python -m pip install -r requirements.txt
-```
+`$ pip install -r requirements.txt`
 
 Download **ChromeDriver** and move the executable to folder in your **PATH**: http://chromedriver.chromium.org/downloads
 
@@ -20,10 +18,36 @@ Install **Google Chrome Browser**: https://www.google.com/chrome/
 
 ### Linux
 
+#### APT
+
 ```
 $ sudo apt update && sudo apt upgrade -y
 $ sudo apt install chromium python -y
-$ python -m pip install -r requirements.txt
+$ pip install -r requirements.txt
+```
+
+Or
+
+```
+$ sudo apt update && sudo apt upgrade -y
+$ sudo apt install chromium python python-setuptools -y
+$ sudo easy_install $(cat requirements.txt)
+```
+
+#### Pacman
+
+```
+$ sudo pacman -Syu --noconfirm
+$ sudo pacman -S chromium python --noconfirm
+$ pip install -r requirements.txt
+```
+
+Or
+
+```
+$ sudo pacman -Syu --noconfirm
+$ sudo pacman -S chromium python python-setuptools --noconfirm
+$ sudo easy_install $(cat requirements.txt)
 ```
 
 ### MacOS
@@ -31,7 +55,7 @@ $ python -m pip install -r requirements.txt
 ```
 $ brew update && brew upgrade
 $ brew install python
-$ python -m pip instal -r requirements.txt
+$ pip instal -r requirements.txt
 ```
 
 ## Installation
