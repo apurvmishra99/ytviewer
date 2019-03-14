@@ -1,7 +1,5 @@
 # YTViewer
 
-## Description
-
 **YTViewer** is simple YouTube views bot
 
 ## Prerequisites
@@ -16,7 +14,7 @@ Install required libraries:
 $ python -m pip install -r requirements.txt
 ```
 
-Download **ChromeDriver** and move the executable to folder in your PATH: http://chromedriver.chromium.org/downloads
+Download **ChromeDriver** and move the executable to folder in your **PATH**: http://chromedriver.chromium.org/downloads
 
 Install **Google Chrome Browser**: https://www.google.com/chrome/
 
@@ -46,23 +44,30 @@ Clone this repository:
 
 Show help:
 
-`$ main.py --help`
+`$ python main.py --help`
 
 Run bot on **URL**:
 
-`$ main.py --url URL`
+`$ python main.py --url URL`
 
 Set number of threads to **T** (default: 15):
 
-`$ main.py --url URL --threads T`
+`$ python main.py --url URL --threads T`
 
 Set duration of view to **S** seconds (default: 300 (5 minutes)):
 
-`$ main.py --url URL --duration S`
+`$ python main.py --url URL --duration S`
 
 Set proxies filepath to **PATH** (default: proxies loaded from web)
 
-`$ main.py --url URL --proxies PATH`
+`$ python main.py --url URL --proxies PATH`
+
+## TODO
+
+* Add support for **Mozilla Firefox**.
+* Add option to use own **User Agents**.
+* Add autamatic video duration.
+* Add support for multiple urls.
 
 ## Authors
 
