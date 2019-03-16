@@ -70,26 +70,33 @@ Show help:
 
 `$ python main.py --help`
 
-Run bot on **URL**:
+Set url of the video to **URL**:
 
 `$ python main.py --url URL`
 
-Set number of threads to **T** (default: 15):
+Set number of the threads to **T** (default: 15):
 
 `$ python main.py --url URL --threads T`
 
-Set duration of view to **S** seconds (default: 300 (5 minutes)):
+Set the duration of video in seconds to **S** (default: 300 seconds (5 minutes)):
 
 `$ python main.py --url URL --duration S`
 
-Set proxies filepath to **PATH** (default: proxies loaded from web)
+Set the path of proxies list to **PATH** (default: proxies loaded from web):
 
 `$ python main.py --url URL --proxies PATH`
+
+Set the user agent for the driver to **AGENT** (default: randomly generated user agent):
+
+`$ python main.py --url URL --user-agent AGENT`
+
+Set the path of the list of the user agents for the driver to **PATH**:
+
+`$ python main.py --url URL --user-agents PATH`
 
 ## TODO
 
 * Add support for **Mozilla Firefox**.
-* Add option to use own **User Agents**.
 * Add autamatic video duration.
 * Add support for multiple urls.
 
