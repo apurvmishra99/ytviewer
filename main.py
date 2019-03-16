@@ -11,10 +11,10 @@ from selenium import webdriver
 from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
-parser.add_argument('-t','--threads',type=int,help='number of threads',default=15)
-parser.add_argument('-u','--url',help='video url',default='',required=True)
-parser.add_argument('-d','--duration',help='duration of video in seconds',default=5*60)
-parser.add_argument('-p','--proxies',help='proxies list')
+parser.add_argument('-t','--threads',type=int,help='set number of the threads',default=15)
+parser.add_argument('-u','--url',help='set url of the video',default='',required=True)
+parser.add_argument('-d','--duration',help='set the duration of the video in seconds',default=5*60)
+parser.add_argument('-p','--proxies',help='set the path to the proxies list')
 args=parser.parse_args()
 
 def bot(url):
