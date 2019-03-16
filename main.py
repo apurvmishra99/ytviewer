@@ -17,6 +17,7 @@ parser.add_argument('-d','--duration',help='set the duration of the video in sec
 parser.add_argument('-p','--proxies',help='set the path of the proxies list')
 parser.add_argument('-us','--user-agent',help='set the user agent for the driver')
 parser.add_argument('-uss','--user-agents',help='set the path of the list of the user agents for the driver')
+parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
 args=parser.parse_args()
 
 def bot(url):
@@ -25,10 +26,20 @@ def bot(url):
 			proxy.http_proxy=choice(proxies)
 			proxy.ssl_proxy=proxy.http_proxy
 			print(proxy.http_proxy)
-			chrome_options.add_argument('user-agent="{}"'.format(args.user_agent or (args.user_agents and choice(user_agents)) or agent.random))
-			capabilities=webdriver.DesiredCapabilities.CHROME
-			proxy.add_to_capabilities(capabilities)
-			driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
+			if args.driver=='chrome':
+				chrome_options.add_argument('user-agent="{}"'.format(args.user_agent or (args.user_agents and choice(user_agents)) or agent.random))
+				capabilities=webdriver.DesiredCapabilities.CHROME
+				proxy.add_to_capabilities(capabilities)
+				driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
+			else:
+				firefox_profile.set_preference('general.useragent.override',args.user_agent or (args.user_agents and choice(user_agents)) or agent.random)
+				firefox_profile.set_preference('network.proxy.type',1)
+				firefox_profile.set_preference('network.proxy.http',proxy.http_proxy.split(':')[0])
+				firefox_profile.set_preference('network.proxy.http_port',proxy.http_proxy.split(':')[1])
+				firefox_profile.set_preference('network.proxy.ssl',proxy.ssl_proxy.split(':')[0])
+				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
+				firefox_profile.update_preferences() 
+				driver=webdriver.Firefox(firefox_profile=firefox_profile)
 			driver.get(args.url)
 			sleep(float(args.duration))
 			driver.close()
@@ -50,8 +61,12 @@ try:
 		user_agents=open(args.user_agents,'r').read().split('\n')
 	else:
 		agent=UserAgent()
-	chrome_options=webdriver.ChromeOptions()
-	chrome_options.add_argument('--mute-audio')
+	if args.driver=='chrome':
+		chrome_options=webdriver.ChromeOptions()
+		chrome_options.add_argument('--mute-audio')
+	else:
+		firefox_profile=webdriver.FirefoxProfile()
+		firefox_profile.set_preference('media.volum_scale','0.0')
 	for i in range(args.threads):
 		t=Thread(target=bot,args=(args.url,))
 		t.deamon=True
