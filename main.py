@@ -15,6 +15,8 @@ parser.add_argument('-t','--threads',type=int,help='set number of the threads',d
 parser.add_argument('-u','--url',help='set url of the video',default='',required=True)
 parser.add_argument('-d','--duration',help='set the duration of the video in seconds',default=5*60)
 parser.add_argument('-p','--proxies',help='set the path to the proxies list')
+parser.add_argument('-us','--user-agent',help='set the user agent for the driver')
+parser.add_argument('-uss','--user-agents',help='set the path to the list of the user agents for the driver')
 args=parser.parse_args()
 
 def bot(url):
@@ -23,7 +25,7 @@ def bot(url):
 			proxy.http_proxy=choice(proxies)
 			proxy.ssl_proxy=proxy.http_proxy
 			print(proxy.http_proxy)
-			chrome_options.add_argument('user-agent="{}"'.format(agent.random))
+			chrome_options.add_argument('user-agent="{}"'.format(args.user_agent or (args.user_agents and choice(user_agents)) or agent.random))
 			capabilities=webdriver.DesiredCapabilities.CHROME
 			proxy.add_to_capabilities(capabilities)
 			driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
@@ -44,7 +46,10 @@ try:
 	print('%d proxies successfully loaded!'%len(proxies))
 	proxy=Proxy()
 	proxy.proxy_type=ProxyType.MANUAL
-	agent=UserAgent()
+	if args.user_agents:
+		user_agents=open(args.user_agents,'r').read().split('\n')
+	else:
+		agent=UserAgent()
 	chrome_options=webdriver.ChromeOptions()
 	chrome_options.add_argument('--mute-audio')
 	for i in range(args.threads):
