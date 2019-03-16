@@ -6,63 +6,38 @@
 
 ### Windows
 
-Install Python: https://www.python.org/downloads/
-
-Install required libraries:
-
-`$ pip install -r requirements.txt`
+Install **Google Chrome Browser**: https://www.google.com/chrome/
 
 Download **ChromeDriver** and move the executable to folder in your **PATH**: http://chromedriver.chromium.org/downloads
 
-Install **Google Chrome Browser**: https://www.google.com/chrome/
-
-### Linux
-
-#### APT
-
-```
-$ sudo apt update && sudo apt upgrade -y
-$ sudo apt install chromium python -y
-$ pip install -r requirements.txt
-```
-
 Or
 
-```
-$ sudo apt update && sudo apt upgrade -y
-$ sudo apt install chromium python python-setuptools -y
-$ sudo easy_install $(cat requirements.txt)
-```
+Install **Mozilla Firefox Browser**: https://www.mozilla.org/en-US/firefox/new/
 
-#### Pacman
-
-```
-$ sudo pacman -Syu --noconfirm
-$ sudo pacman -S chromium python --noconfirm
-$ pip install -r requirements.txt
-```
-
-Or
-
-```
-$ sudo pacman -Syu --noconfirm
-$ sudo pacman -S chromium python python-setuptools --noconfirm
-$ sudo easy_install $(cat requirements.txt)
-```
-
-### MacOS
-
-```
-$ brew update && brew upgrade
-$ brew install python
-$ pip instal -r requirements.txt
-```
+Download **geckodriver**, unzip and move the executable to folder in your **PATH**: https://github.com/mozilla/geckodriver/releases
 
 ## Installation
 
-Clone this repository:
+### Windows
 
-`$ git clone "https://github.com/DeBos99/ytviewer.git"`
+Install Python: https://www.python.org/downloads/
+
+```
+git clone "https://github.com/DeBos99/ytviewer.git"
+cd ytviewer
+install.bat
+cd ..
+```
+
+### Linux & MacOS
+
+```
+git clone "https://github.com/DeBos99/ytviewer.git"
+cd ytviewer
+sudo chmod +x install.sh
+sudo ./install.sh
+cd ..
+```
 
 ## Usage
 
@@ -94,9 +69,16 @@ Set the path of the list of the user agents for the driver to **PATH**:
 
 `$ python main.py --url URL --user-agents PATH`
 
+Set the driver for the bot to chrome:
+
+`$ python main.py --url URL --driver chrome`
+
+Set the driver for the bot to firefox:
+
+`$ python main.py --url URL --driver firefox`
+
 ## TODO
 
-* Add support for **Mozilla Firefox**.
 * Add autamatic video duration.
 * Add support for multiple urls.
 
