@@ -53,7 +53,7 @@ Set number of the threads to **T** (default: 15):
 
 `$ python main.py --url URL --threads T`
 
-Set the duration of video in seconds to **S** (default: 300 seconds (5 minutes)):
+Set the duration of video in seconds to **S** (default: video duration):
 
 `$ python main.py --url URL --duration S`
 
@@ -79,7 +79,6 @@ Set the driver for the bot to firefox:
 
 ## TODO
 
-* Add automatic video duration.
 * Add support for multiple urls.
 * Change video quality to 144p.
 * Add support for user changeable video quality.
