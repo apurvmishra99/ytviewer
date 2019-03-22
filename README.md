@@ -79,8 +79,10 @@ Set the driver for the bot to firefox:
 
 ## TODO
 
-* Add autamatic video duration.
+* Add automatic video duration.
 * Add support for multiple urls.
+* Change video quality to 144p.
+* Add support for user changeable video quality.
 
 ## Authors
 
