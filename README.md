@@ -65,9 +65,9 @@ Set the user agent for the driver to **AGENT** (default: randomly generated user
 
 `$ python main.py --url URL --user-agent AGENT`
 
-Set the path of the list of the user agents for the driver to **PATH**:
+Set the path of the user agent list for the driver to **PATH** (default: randomly generated user agent):
 
-`$ python main.py --url URL --user-agents PATH`
+`$ python main.py --url URL --user-agent PATH`
 
 Set the driver for the bot to chrome:
 
