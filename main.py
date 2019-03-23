@@ -12,16 +12,17 @@ from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
 parser.add_argument('-t','--threads',type=int,help='set number of the threads',default=15)
-parser.add_argument('-u','--url',help='set url of the video',default='',required=True)
+parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
 parser.add_argument('-d','--duration',help='set the duration of the video in seconds',type=float)
 parser.add_argument('-p','--proxies',help='set the path of the proxies list')
-parser.add_argument('-us','--user-agent',help='set the user agent for the driver')
+parser.add_argument('-us','--user-agent',help='set the user agent for the driver/set the path of the user agents list for the driver')
 parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
 args=parser.parse_args()
 
 def bot(url):
 	try:
 		while True:
+			url=choice(urls)
 			proxy.http_proxy=choice(proxies)
 			proxy.ssl_proxy=proxy.http_proxy
 			print(proxy.http_proxy)
@@ -40,7 +41,7 @@ def bot(url):
 				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
 				firefox_profile.update_preferences() 
 				driver=webdriver.Firefox(firefox_profile=firefox_profile)
-			driver.get(args.url)
+			driver.get(url)
 			sleep(float(args.duration) or sum(int(x)*60**i for i,x in enumerate(reversed(driver.find_element_by_class_name('ytp-time-duration').text.split(":")))))
 			driver.close()
 	except KeyboardInterrupt:_exit(0)
@@ -49,6 +50,11 @@ def bot(url):
 		_exit(1)
 
 try:
+	if args.url:
+		if path.isfile(args.url):
+			urls=list(filter(None,open(args.url,'r').read().split('\n')))
+		else:
+			urls=[args.url]
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().split('\n')
 	else:
