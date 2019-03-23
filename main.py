@@ -16,7 +16,7 @@ parser.add_argument('-u','--url',help='set url of the video',default='',required
 parser.add_argument('-d','--duration',help='set the duration of the video in seconds',type=float)
 parser.add_argument('-p','--proxies',help='set the path of the proxies list')
 parser.add_argument('-us','--user-agent',help='set the user agent for the driver')
-parser.add_argument('-uss','--user-agents',help='set the path of the list of the user agents for the driver')
+parser.add_argument('-usl','--user-agents',help='set the path of the list of the user agents for the driver')
 parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
 args=parser.parse_args()
 
