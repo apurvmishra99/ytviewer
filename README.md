@@ -49,6 +49,10 @@ Set url of the video to **URL**:
 
 `$ python main.py --url URL`
 
+Set the path of the urls list to **PATH**:
+
+`$ python main.py --url PATH`
+
 Set number of the threads to **T** (default: 15):
 
 `$ python main.py --url URL --threads T`
@@ -65,7 +69,7 @@ Set the user agent for the driver to **AGENT** (default: randomly generated user
 
 `$ python main.py --url URL --user-agent AGENT`
 
-Set the path of the user agent list for the driver to **PATH** (default: randomly generated user agent):
+Set the path of the user agents list for the driver to **PATH** (default: randomly generated user agent):
 
 `$ python main.py --url URL --user-agent PATH`
 
@@ -79,7 +83,6 @@ Set the driver for the bot to firefox:
 
 ## TODO
 
-* Add support for multiple urls.
 * Change video quality to 144p.
 * Add support for user changeable video quality.
 * Eliminate dead proxies.
