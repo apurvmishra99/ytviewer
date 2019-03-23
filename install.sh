@@ -126,3 +126,4 @@ case "$(uname -s)" in
 		;;
 esac
 eval "${commands}"
+echo "Successfully installed YTViewer."
