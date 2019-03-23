@@ -82,6 +82,7 @@ Set the driver for the bot to firefox:
 * Add support for multiple urls.
 * Change video quality to 144p.
 * Add support for user changeable video quality.
+* Eliminate dead proxies.
 
 ## Authors
 
