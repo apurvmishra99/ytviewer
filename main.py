@@ -28,11 +28,13 @@ def bot(url):
 			print(proxy.http_proxy)
 			user_agent=choice(user_agents) if args.user_agent else user_agents.random
 			if args.driver=='chrome':
+				chrome_options=webdriver.ChromeOptions()
 				chrome_options.add_argument('user-agent="{}"'.format(user_agent))
 				capabilities=webdriver.DesiredCapabilities.CHROME
 				proxy.add_to_capabilities(capabilities)
 				driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
 			else:
+				firefox_profile=webdriver.FirefoxProfile()
 				firefox_profile.set_preference('general.useragent.override',user_agent)
 				firefox_profile.set_preference('network.proxy.type',1)
 				firefox_profile.set_preference('network.proxy.http',proxy.http_proxy.split(':')[0])
@@ -42,6 +44,8 @@ def bot(url):
 				firefox_profile.update_preferences() 
 				driver=webdriver.Firefox(firefox_profile=firefox_profile)
 			driver.get(url)
+			player=driver.execute_script("return document.getElementById('movie_player');")
+			driver.execute_script("arguments[0].setVolume(0);",player)
 			sleep(float(args.duration) or sum(int(x)*60**i for i,x in enumerate(reversed(driver.find_element_by_class_name('ytp-time-duration').text.split(":")))))
 			driver.close()
 	except KeyboardInterrupt:_exit(0)
@@ -70,12 +74,6 @@ try:
 			user_agents=[args.user_agent]
 	else:
 		user_agents=UserAgent()
-	if args.driver=='chrome':
-		chrome_options=webdriver.ChromeOptions()
-		chrome_options.add_argument('--mute-audio')
-	else:
-		firefox_profile=webdriver.FirefoxProfile()
-		firefox_profile.set_preference('media.volum_scale','0.0')
 	for i in range(args.threads):
 		t=Thread(target=bot,args=(args.url,))
 		t.deamon=True
