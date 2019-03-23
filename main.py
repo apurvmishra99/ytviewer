@@ -46,7 +46,7 @@ def bot(url):
 			driver.get(url)
 			player=driver.execute_script("return document.getElementById('movie_player');")
 			driver.execute_script("arguments[0].setVolume(0);",player)
-			sleep(float(args.duration) or sum(int(x)*60**i for i,x in enumerate(reversed(driver.find_element_by_class_name('ytp-time-duration').text.split(":")))))
+			sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
 			driver.close()
 	except KeyboardInterrupt:_exit(0)
 	except Exception:
