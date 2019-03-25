@@ -8,7 +8,7 @@
 - [Prerequisites](#prerequisites)
   - [Windows](#Prerequisites-Windows)
 - [Installation](#installation)
-  - [Windows](#windows)
+  - [Windows](#Installation-Windows)
   - [Linux & MacOS](#Linux&MacOS)
 - [Usage](#usage)
 - [TODO](#todo)
