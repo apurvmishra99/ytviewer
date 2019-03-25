@@ -44,9 +44,12 @@ def bot(url):
 				firefox_profile.update_preferences() 
 				driver=webdriver.Firefox(firefox_profile=firefox_profile)
 			driver.get(url)
-			player=driver.execute_script("return document.getElementById('movie_player');")
-			driver.execute_script("arguments[0].setVolume(0);",player)
-			sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+			if 'ERR_PROXY_CONNECTION_FAILED' not in driver.page_source:
+				player=None
+				while player is None:
+					player=driver.execute_script("return document.getElementById('movie_player');")
+				driver.execute_script("arguments[0].setVolume(0);",player)
+				sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
 			driver.close()
 	except KeyboardInterrupt:_exit(0)
 	except Exception:
