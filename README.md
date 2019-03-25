@@ -2,9 +2,22 @@
 
 **YTViewer** is simple YouTube views bot
 
+## Content
+
+- [Content](#content)
+- [Prerequisites](#prerequisites)
+  - [Windows](#Prerequisites-Windows)
+- [Installation](#installation)
+  - [Windows](#windows)
+  - [Linux & MacOS](#Linux&MacOS)
+- [Usage](#usage)
+- [TODO](#todo)
+- [Authors](#authors)
+- [License](#license)
+
 ## Prerequisites
 
-### Windows
+### <a name="Prerequisites-Windows">Windows
 
 Install **Google Chrome Browser**: https://www.google.com/chrome/
 
@@ -18,7 +31,7 @@ Download **geckodriver**, unzip and move the executable to folder in your **PATH
 
 ## Installation
 
-### Windows
+### <a name="Installation-Windows">Windows
 
 Install Python: https://www.python.org/downloads/
 
@@ -29,7 +42,7 @@ install.bat
 cd ..
 ```
 
-### Linux & MacOS
+### <a name="Linux&MacOS">Linux & MacOS
 
 ```
 git clone "https://github.com/DeBos99/ytviewer.git"
