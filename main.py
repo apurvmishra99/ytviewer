@@ -8,6 +8,7 @@ from threading import Thread
 from traceback import print_exc
 from fake_useragent import UserAgent
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
@@ -43,13 +44,16 @@ def bot(url):
 				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
 				firefox_profile.update_preferences() 
 				driver=webdriver.Firefox(firefox_profile=firefox_profile)
-			driver.get(url)
-			if 'ERR_PROXY_CONNECTION_FAILED' not in driver.page_source:
-				player=None
-				while player is None:
-					player=driver.execute_script("return document.getElementById('movie_player');")
-				driver.execute_script("arguments[0].setVolume(0);",player)
-				sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+			driver.set_page_load_timeout(120);
+			try:
+				driver.get(url)
+				if 'ERR_PROXY_CONNECTION_FAILED' not in driver.page_source and 'ERR_CONNECTION_TIMED_OUT' not in driver.page_source:
+					player=None
+					while player is None:
+						player=driver.execute_script("return document.getElementById('movie_player');")
+					driver.execute_script("arguments[0].setVolume(0);",player)
+					sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+			except TimeoutException:pass
 			driver.close()
 	except KeyboardInterrupt:_exit(0)
 	except Exception:
