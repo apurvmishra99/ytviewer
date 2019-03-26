@@ -47,7 +47,7 @@ def bot(url):
 			driver.set_page_load_timeout(120);
 			try:
 				driver.get(url)
-				if 'ERR_PROXY_CONNECTION_FAILED' not in driver.page_source and 'ERR_CONNECTION_TIMED_OUT' not in driver.page_source:
+				if not any(x in driver.page_source for x in ['ERR_PROXY_CONNECTION_FAILED','ERR_CONNECTION_TIMED_OUT']):
 					player=None
 					while player is None:
 						player=driver.execute_script("return document.getElementById('movie_player');")
