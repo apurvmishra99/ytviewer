@@ -56,43 +56,43 @@ cd ..
 
 Show help:
 
-`$ python main.py --help`
+`python main.py --help`
 
 Set url of the video to **URL**:
 
-`$ python main.py --url URL`
+`python main.py --url URL`
 
 Set the path of the urls list to **PATH**:
 
-`$ python main.py --url PATH`
+`python main.py --url PATH`
 
 Set number of the threads to **T** (default: 15):
 
-`$ python main.py --url URL --threads T`
+`python main.py --url URL --threads T`
 
 Set the duration of video in seconds to **S** (default: video duration):
 
-`$ python main.py --url URL --duration S`
+`python main.py --url URL --duration S`
 
 Set the path of proxies list to **PATH** (default: proxies loaded from web):
 
-`$ python main.py --url URL --proxies PATH`
+`python main.py --url URL --proxies PATH`
 
 Set the user agent for the driver to **AGENT** (default: randomly generated user agent):
 
-`$ python main.py --url URL --user-agent AGENT`
+`python main.py --url URL --user-agent AGENT`
 
 Set the path of the user agents list for the driver to **PATH** (default: randomly generated user agent):
 
-`$ python main.py --url URL --user-agent PATH`
+`python main.py --url URL --user-agent PATH`
 
 Set the driver for the bot to chrome:
 
-`$ python main.py --url URL --driver chrome`
+`python main.py --url URL --driver chrome`
 
 Set the driver for the bot to firefox:
 
-`$ python main.py --url URL --driver firefox`
+`python main.py --url URL --driver firefox`
 
 ## TODO
 
