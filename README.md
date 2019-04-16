@@ -96,9 +96,6 @@ Set the driver for the bot to firefox:
 
 ## TODO
 
-* Change video quality to 144p.
-* Add support for user changeable video quality.
-
 ## Authors
 
 * **Michał Wróblewski** - Main Developer - [DeBos99](https://github.com/DeBos99)
