@@ -96,6 +96,8 @@ Set the driver for the bot to firefox:
 
 ## TODO
 
+* Add support for PyVirtualDisplay
+
 ## Authors
 
 * **Michał Wróblewski** - Main Developer - [DeBos99](https://github.com/DeBos99)
