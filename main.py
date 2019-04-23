@@ -1,6 +1,7 @@
 import re
 import requests
 from os import _exit,path
+from sys import stdin
 from time import sleep
 from random import choice,uniform
 from argparse import ArgumentParser
@@ -20,7 +21,11 @@ parser.add_argument('-us','--user-agent',help='set the user agent for the driver
 parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
 args=parser.parse_args()
 
-def bot(url):
+def exit(exit_code):
+	if exit_code!=0:
+		print_exc()
+	_exit(exit_code)
+def bot(bot_id,url):
 	try:
 		while True:
 			url=choice(urls)
@@ -54,11 +59,9 @@ def bot(url):
 					driver.execute_script("arguments[0].setVolume(0);",player)
 					sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
 			except TimeoutException:pass
-			driver.close()
-	except KeyboardInterrupt:_exit(0)
-	except Exception:
-		print_exc()
-		_exit(1)
+			driver.quit()
+	except KeyboardInterrupt:exit(0)
+	except:exit(1)
 
 try:
 	if args.url:
@@ -82,11 +85,11 @@ try:
 	else:
 		user_agents=UserAgent()
 	for i in range(args.threads):
-		t=Thread(target=bot,args=(args.url,))
-		t.deamon=True
+		t=Thread(target=bot,args=(i,args.url))
+		t.daemon=True
 		t.start()
 		sleep(uniform(2.0,4.0))
-except KeyboardInterrupt:_exit(0)
-except Exception:
-	print_exc()
-	_exit(1)
+	stdin.read(1)
+	exit(0)
+except KeyboardInterrupt:exit(0)
+except:exit(1)
