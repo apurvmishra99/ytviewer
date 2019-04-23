@@ -97,6 +97,7 @@ Set the driver for the bot to firefox:
 ## TODO
 
 * Add support for PyVirtualDisplay
+* Refactor code to Ruby
 
 ## Authors
 
