@@ -47,7 +47,6 @@ cd ..
 ```
 git clone "https://github.com/DeBos99/ytviewer.git"
 cd ytviewer
-sudo chmod +x install.sh
 sudo ./install.sh
 cd ..
 ```
