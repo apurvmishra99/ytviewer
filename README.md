@@ -97,6 +97,7 @@ Set the driver for the bot to firefox:
 
 * Add support for PyVirtualDisplay
 * Refactor code to Ruby
+* Add support for proxies with authorization
 
 ## Authors
 
