@@ -35,7 +35,7 @@ case "$(uname -s)" in
 					commands=$(cat<<-EOT
 						$commands
 						$install python-pip
-						pip install -r requirements.txt
+						sudo pip install -r requirements.txt
 					EOT
 					)
 					break
