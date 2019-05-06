@@ -69,6 +69,10 @@ Set number of the threads to **T** (default: 15):
 
 `python main.py --url URL --threads T`
 
+Set the drives as headless (default 'n'):
+
+`python main.py --headless y`
+
 Set the duration of video in seconds to **S** (default: video duration):
 
 `python main.py --url URL --duration S`
