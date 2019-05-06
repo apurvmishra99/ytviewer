@@ -19,6 +19,7 @@ parser.add_argument('-d','--duration',help='set the duration of the video in sec
 parser.add_argument('-p','--proxies',help='set the path of the proxies list')
 parser.add_argument('-us','--user-agent',help='set the user agent for the driver/set the path of the user agents list for the driver')
 parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
+parser.add_argument('-hd','--headless',help='set the driver as headless',action='store_true')
 args=parser.parse_args()
 
 def exit(exit_code):
@@ -36,10 +37,14 @@ def bot(bot_id,url):
 			if args.driver=='chrome':
 				chrome_options=webdriver.ChromeOptions()
 				chrome_options.add_argument('user-agent="{}"'.format(user_agent))
+				if args.headless:
+					chrome_options.add_argument('--headless')
 				capabilities=webdriver.DesiredCapabilities.CHROME
 				proxy.add_to_capabilities(capabilities)
 				driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
 			else:
+				options=webdriver.FirefoxOptions()
+				options.headless=args.headless
 				firefox_profile=webdriver.FirefoxProfile()
 				firefox_profile.set_preference('general.useragent.override',user_agent)
 				firefox_profile.set_preference('network.proxy.type',1)
@@ -47,8 +52,8 @@ def bot(bot_id,url):
 				firefox_profile.set_preference('network.proxy.http_port',proxy.http_proxy.split(':')[1])
 				firefox_profile.set_preference('network.proxy.ssl',proxy.ssl_proxy.split(':')[0])
 				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
-				firefox_profile.update_preferences() 
-				driver=webdriver.Firefox(firefox_profile=firefox_profile)
+				firefox_profile.update_preferences()
+				driver=webdriver.Firefox(firefox_profile=firefox_profile, options=options)
 			driver.set_page_load_timeout(120);
 			try:
 				driver.get(url)
