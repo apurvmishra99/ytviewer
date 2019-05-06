@@ -41,7 +41,7 @@ def bot(bot_id,url):
 				chrome_options.add_argument('headless="{}"'.format(headless))
 				capabilities=webdriver.DesiredCapabilities.CHROME
 				proxy.add_to_capabilities(capabilities)
-				driver=webdriver.Chrome("/Users/omergulen/Documents/new-projects/ytviewer/chromedriver", options=chrome_options,desired_capabilities=capabilities)
+				driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
 			else:
 				options=webdriver.FirefoxOptions()
 				options.headless = headless
@@ -53,7 +53,7 @@ def bot(bot_id,url):
 				firefox_profile.set_preference('network.proxy.ssl',proxy.ssl_proxy.split(':')[0])
 				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
 				firefox_profile.update_preferences()
-				driver=webdriver.Firefox(executable_path="/Users/omergulen/Documents/new-projects/ytviewer/geckodriver", firefox_profile=firefox_profile, options=options)
+				driver=webdriver.Firefox(firefox_profile=firefox_profile, options=options)
 			driver.set_page_load_timeout(120);
 			try:
 				driver.get(url)
