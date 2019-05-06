@@ -19,7 +19,7 @@ parser.add_argument('-d','--duration',help='set the duration of the video in sec
 parser.add_argument('-p','--proxies',help='set the path of the proxies list')
 parser.add_argument('-us','--user-agent',help='set the user agent for the driver/set the path of the user agents list for the driver')
 parser.add_argument('-dr','--driver',help='set the driver for the bot',choices=['chrome','firefox'],default='chrome')
-parser.add_argument('-hd','--headless',help='set the driver as headles',choices=['y','n'],default='y')
+parser.add_argument('-hd','--headless',help='set the driver as headles',choices=['y','n'],default='n')
 args=parser.parse_args()
 
 def exit(exit_code):
