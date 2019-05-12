@@ -30,30 +30,28 @@ def bot(bot_id,url):
 	try:
 		while True:
 			url=choice(urls)
-			proxy.http_proxy=choice(proxies)
-			proxy.ssl_proxy=proxy.http_proxy
-			print(proxy.http_proxy)
+			proxy=choice(proxies)
+			print(proxy)
 			user_agent=choice(user_agents) if args.user_agent else user_agents.random
 			if args.driver=='chrome':
 				chrome_options=webdriver.ChromeOptions()
+				chrome_options.add_argument('--proxy-server={}'.format(proxy))
 				chrome_options.add_argument('user-agent="{}"'.format(user_agent))
 				if args.headless:
 					chrome_options.add_argument('--headless')
-				capabilities=webdriver.DesiredCapabilities.CHROME
-				proxy.add_to_capabilities(capabilities)
-				driver=webdriver.Chrome(options=chrome_options,desired_capabilities=capabilities)
+				driver=webdriver.Chrome(options=chrome_options)
 			else:
 				options=webdriver.FirefoxOptions()
 				options.headless=args.headless
 				firefox_profile=webdriver.FirefoxProfile()
 				firefox_profile.set_preference('general.useragent.override',user_agent)
 				firefox_profile.set_preference('network.proxy.type',1)
-				firefox_profile.set_preference('network.proxy.http',proxy.http_proxy.split(':')[0])
-				firefox_profile.set_preference('network.proxy.http_port',proxy.http_proxy.split(':')[1])
-				firefox_profile.set_preference('network.proxy.ssl',proxy.ssl_proxy.split(':')[0])
-				firefox_profile.set_preference('network.proxy.ssl_port',proxy.ssl_proxy.split(':')[1])
+				firefox_profile.set_preference('network.proxy.http',proxy.split(':')[0])
+				firefox_profile.set_preference('network.proxy.http_port',proxy.split(':')[1])
+				firefox_profile.set_preference('network.proxy.ssl',proxy.split(':')[0])
+				firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
 				firefox_profile.update_preferences()
-				driver=webdriver.Firefox(firefox_profile=firefox_profile, options=options)
+				driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options)
 			driver.set_page_load_timeout(120);
 			try:
 				driver.get(url)
@@ -80,8 +78,6 @@ try:
 		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
 		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
 	print('%d proxies successfully loaded!'%len(proxies))
-	proxy=Proxy()
-	proxy.proxy_type=ProxyType.MANUAL
 	if args.user_agent:
 		if path.isfile(args.user_agent):
 			user_agents=list(filter(None,open(args.user_agent,'r').read().split('\n')))
