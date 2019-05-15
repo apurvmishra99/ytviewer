@@ -26,7 +26,7 @@ def exit(exit_code):
 	if exit_code!=0:
 		print_exc()
 	_exit(exit_code)
-def bot(bot_id,url):
+def bot():
 	try:
 		while True:
 			url=choice(urls)
@@ -55,7 +55,7 @@ def bot(bot_id,url):
 			driver.set_page_load_timeout(120);
 			try:
 				driver.get(url)
-				if not any(x in driver.page_source for x in ['ERR_PROXY_CONNECTION_FAILED','ERR_CONNECTION_TIMED_OUT']):
+				if not 'ERR_' in driver.page_source:
 					player=None
 					while player is None:
 						player=driver.execute_script("return document.getElementById('movie_player');")
@@ -86,7 +86,7 @@ try:
 	else:
 		user_agents=UserAgent()
 	for i in range(args.threads):
-		t=Thread(target=bot,args=(i,args.url))
+		t=Thread(target=bot)
 		t.daemon=True
 		t.start()
 		sleep(uniform(2.0,4.0))
