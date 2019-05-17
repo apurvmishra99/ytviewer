@@ -47,7 +47,7 @@ cd ..
 ```
 git clone "https://github.com/DeBos99/ytviewer.git"
 cd ytviewer
-sudo ./install.sh
+./install.sh
 cd ..
 ```
 
