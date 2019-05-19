@@ -33,35 +33,36 @@ def bot():
 			proxy=choice(proxies)
 			print(proxy)
 			user_agent=choice(user_agents) if args.user_agent else user_agents.random
-			if args.driver=='chrome':
-				chrome_options=webdriver.ChromeOptions()
-				chrome_options.add_argument('--proxy-server={}'.format(proxy))
-				chrome_options.add_argument('user-agent="{}"'.format(user_agent))
-				if args.headless:
-					chrome_options.add_argument('--headless')
-				driver=webdriver.Chrome(options=chrome_options)
-			else:
-				options=webdriver.FirefoxOptions()
-				options.headless=args.headless
-				firefox_profile=webdriver.FirefoxProfile()
-				firefox_profile.set_preference('general.useragent.override',user_agent)
-				firefox_profile.set_preference('network.proxy.type',1)
-				firefox_profile.set_preference('network.proxy.http',proxy.split(':')[0])
-				firefox_profile.set_preference('network.proxy.http_port',proxy.split(':')[1])
-				firefox_profile.set_preference('network.proxy.ssl',proxy.split(':')[0])
-				firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
-				firefox_profile.update_preferences()
-				driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options)
-			driver.set_page_load_timeout(120);
 			try:
-				driver.get(url)
-				if not 'ERR_' in driver.page_source:
-					player=None
-					while player is None:
-						player=driver.execute_script("return document.getElementById('movie_player');")
-					driver.execute_script("arguments[0].setVolume(0);",player)
-					sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
-			except TimeoutException:pass
+				if args.driver=='chrome':
+					chrome_options=webdriver.ChromeOptions()
+					chrome_options.add_argument('--proxy-server={}'.format(proxy))
+					chrome_options.add_argument('user-agent="{}"'.format(user_agent))
+					if args.headless:
+						chrome_options.add_argument('--headless')
+					driver=webdriver.Chrome(options=chrome_options)
+				else:
+					options=webdriver.FirefoxOptions()
+					options.headless=args.headless
+					firefox_profile=webdriver.FirefoxProfile()
+					firefox_profile.set_preference('general.useragent.override',user_agent)
+					firefox_profile.set_preference('network.proxy.type',1)
+					firefox_profile.set_preference('network.proxy.http',proxy.split(':')[0])
+					firefox_profile.set_preference('network.proxy.http_port',proxy.split(':')[1])
+					firefox_profile.set_preference('network.proxy.ssl',proxy.split(':')[0])
+					firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
+					firefox_profile.update_preferences()
+					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options)
+				driver.set_page_load_timeout(120);
+				try:
+					driver.get(url)
+					if not 'ERR_' in driver.page_source:
+						player=None
+						while player is None:
+							player=driver.execute_script("return document.getElementById('movie_player');")
+						driver.execute_script("arguments[0].setVolume(0);",player)
+						sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+				except TimeoutException:pass
 			except WebDriverException:pass
 			driver.quit()
 	except KeyboardInterrupt:exit(0)
