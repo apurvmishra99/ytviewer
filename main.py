@@ -9,7 +9,7 @@ from threading import Thread
 from traceback import print_exc
 from fake_useragent import UserAgent
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException,WebDriverException
 from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
@@ -62,6 +62,7 @@ def bot():
 					driver.execute_script("arguments[0].setVolume(0);",player)
 					sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
 			except TimeoutException:pass
+			except WebDriverException:pass
 			driver.quit()
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
