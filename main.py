@@ -1,4 +1,5 @@
 import re
+import queue
 import requests
 from os import _exit,path
 from sys import stdin
@@ -26,11 +27,22 @@ def exit(exit_code):
 	if exit_code!=0:
 		print_exc()
 	_exit(exit_code)
+def update_proxies():
+	global proxies
+	if args.proxies:
+		proxies=open(args.proxies,'r').read().split('\n')
+	else:
+		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
+		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
+	proxies=queue.deque(proxies)
+	print('%d proxies successfully loaded!'%len(proxies))
 def bot():
 	try:
 		while True:
 			url=choice(urls)
-			proxy=choice(proxies)
+			if len(proxies)==0:
+				update_proxies()
+			proxy=proxies.pop()
 			print(proxy)
 			user_agent=choice(user_agents) if args.user_agent else user_agents.random
 			try:
@@ -74,12 +86,7 @@ try:
 			urls=list(filter(None,open(args.url,'r').read().split('\n')))
 		else:
 			urls=[args.url]
-	if args.proxies:
-		proxies=open(args.proxies,'r').read().split('\n')
-	else:
-		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
-		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
-	print('%d proxies successfully loaded!'%len(proxies))
+	update_proxies()
 	if args.user_agent:
 		if path.isfile(args.user_agent):
 			user_agents=list(filter(None,open(args.user_agent,'r').read().split('\n')))
