@@ -102,6 +102,10 @@ Set the driver for the bot to firefox:
 * Add support for proxies with authorization
 * Improve undetectability
 
+## Disclaimer
+
+**YTViewer** was created for educational purposes and I'm not taking responsibility for any of your actions.
+
 ## Authors
 
 * **Michał Wróblewski** - Main Developer - [DeBos99](https://github.com/DeBos99)
