@@ -11,7 +11,6 @@
   - [Windows](#Installation-Windows)
   - [Linux & MacOS](#Linux&MacOS)
 - [Usage](#usage)
-- [TODO](#todo)
 - [Disclaimer](#disclaimer)
 - [Authors](#authors)
 - [License](#license)
@@ -97,11 +96,6 @@ Set the driver for the bot to chrome:
 Set the driver for the bot to firefox:
 
 `python main.py --url URL --driver firefox`
-
-## TODO
-
-* Add support for proxies with authorization
-* Improve undetectability
 
 ## Disclaimer
 
