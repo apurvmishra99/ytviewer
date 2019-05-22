@@ -106,7 +106,7 @@ Set the driver for the bot to firefox:
 
 * **Michał Wróblewski** - Main Developer - [DeBos99](https://github.com/DeBos99)
 
-See also the list of [contributors](https://github.com/DeBos99/ytviewer.git) who participated in this project.
+See also the list of [contributors](https://github.com/DeBos99/ytviewer/contributors) who participated in this project.
 
 ## Contact
 
