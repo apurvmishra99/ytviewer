@@ -1,6 +1,4 @@
 import re
-try:import queue
-except ImportError:import Queue as queue
 import requests
 from os import _exit,path
 from sys import stdin
@@ -9,6 +7,7 @@ from random import choice,uniform
 from argparse import ArgumentParser
 from threading import Thread
 from traceback import print_exc
+from collections import deque
 from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException,WebDriverException
