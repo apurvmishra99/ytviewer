@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Command**
-Executed command:
+Executed command: ``
 
 **Logs**
 Logs of executed command:
