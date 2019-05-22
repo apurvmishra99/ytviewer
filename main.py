@@ -65,6 +65,7 @@ def bot():
 					firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
 					firefox_profile.update_preferences()
 					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options)
+				driver.set_window_size(320,570)
 				driver.set_page_load_timeout(120);
 				try:
 					driver.get(url)
