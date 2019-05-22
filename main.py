@@ -1,5 +1,6 @@
 import re
-import queue
+try:import queue
+except ImportError:import Queue as queue
 import requests
 from os import _exit,path
 from sys import stdin
