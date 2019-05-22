@@ -39,7 +39,7 @@ def update_proxies():
 def bot():
 	try:
 		while True:
-			url=choice(urls)
+			url=re.sub(r'\A(?:https?://)?(.*)\Z',r'https://\1',choice(urls))
 			if len(proxies)==0:
 				update_proxies()
 			proxy=proxies.pop()
