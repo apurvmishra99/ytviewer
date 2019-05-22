@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report
 title: "[BUG]"
 labels: bug
 assignees: ''
@@ -14,5 +14,5 @@ Executed command:
 Logs of executed command:
 
 **Software**
-Python version (`python --version`):
+Python version: `python --version`
 OS:
