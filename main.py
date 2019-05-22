@@ -34,7 +34,7 @@ def update_proxies():
 	else:
 		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
 		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
-	proxies=queue.deque(proxies)
+	proxies=deque(proxies)
 	print('%d proxies successfully loaded!'%len(proxies))
 def bot():
 	try:
