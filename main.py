@@ -55,7 +55,8 @@ def bot():
 					driver=webdriver.Chrome(options=chrome_options)
 				else:
 					options=webdriver.FirefoxOptions()
-					options.headless=args.headless
+					if args.headless:
+						options.add_argument('--headless')
 					firefox_profile=webdriver.FirefoxProfile()
 					firefox_profile.set_preference('general.useragent.override',user_agent)
 					firefox_profile.set_preference('network.proxy.type',1)
