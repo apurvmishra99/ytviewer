@@ -39,7 +39,7 @@ def update_proxies():
 def bot():
 	try:
 		while True:
-			url=re.sub(r'\A(?:https?://)?(.*)\Z',r'https://\1',choice(urls))
+			url=choice(urls)
 			if len(proxies)==0:
 				update_proxies()
 			proxy=proxies.pop()
@@ -88,6 +88,7 @@ try:
 			urls=list(filter(None,open(args.url,'r').read().split('\n')))
 		else:
 			urls=[args.url]
+	urls=[re.sub(r'\A(?:https?://)?(.*)\Z',r'https://\1',x) for x in urls]
 	update_proxies()
 	if args.user_agent:
 		if path.isfile(args.user_agent):
