@@ -1,6 +1,6 @@
 import re
 import requests
-from os import _exit,path
+from os import _exit,path,devnull
 from sys import stdin
 from time import sleep
 from random import choice,uniform
@@ -65,7 +65,7 @@ def bot():
 					firefox_profile.set_preference('network.proxy.ssl',proxy.split(':')[0])
 					firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
 					firefox_profile.update_preferences()
-					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options)
+					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options,service_log_path=devnull)
 				driver.set_window_size(320,570)
 				driver.set_page_load_timeout(120);
 				try:
