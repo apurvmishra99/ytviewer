@@ -14,5 +14,6 @@ Executed command.
 Logs of executed command.
 
 **Software**
-Operating System.
-Python version.
+OS:
+Python version:
+WebDriver:
