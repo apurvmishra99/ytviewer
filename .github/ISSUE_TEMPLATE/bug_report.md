@@ -8,11 +8,11 @@ assignees: ''
 ---
 
 **Command**
-Executed command: ``
+Executed command.
 
 **Logs**
-Logs of executed command:
+Logs of executed command.
 
 **Software**
-Python version: `python --version`
-OS:
+Operating System.
+Python version.
