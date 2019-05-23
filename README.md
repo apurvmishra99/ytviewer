@@ -11,6 +11,9 @@
   - [Windows](#Installation-Windows)
   - [Linux & MacOS](#Linux&MacOS)
 - [Usage](#usage)
+- [Documentation](#documentation)
+  - [Required arguments](#required-arguments)
+  - [Optional arguments](#optional-arguments)
 - [Disclaimer](#disclaimer)
 - [Authors](#authors)
 - [Contact](#contact)
@@ -54,49 +57,29 @@ cd ..
 
 ## Usage
 
-Show help:
+`python main.py ARGUMENTS`
 
-`python main.py --help`
+## Documentation
 
-Set url of the video to **URL**:
+### Required arguments
 
-`python main.py --url URL`
+| Argument              | Description                                    |
+| :---                  | :---                                           |
+| -u URL<br>--url URL   | Sets the url of video to **URL**.              |
+| -u PATH<br>--url PATH | Sets the path to the list of urls to **PATH**. |
 
-Set the path of the urls list to **PATH**:
+### Optional arguments
 
-`python main.py --url PATH`
-
-Set number of the threads to **T** (default: 15):
-
-`python main.py --url URL --threads T`
-
-Set the driver as headless:
-
-`python main.py --headless`
-
-Set the duration of video in seconds to **S** (default: video duration):
-
-`python main.py --url URL --duration S`
-
-Set the path of proxies list to **PATH** (default: proxies loaded from web):
-
-`python main.py --url URL --proxies PATH`
-
-Set the user agent for the driver to **AGENT** (default: randomly generated user agent):
-
-`python main.py --url URL --user-agent AGENT`
-
-Set the path of the user agents list for the driver to **PATH** (default: randomly generated user agent):
-
-`python main.py --url URL --user-agent PATH`
-
-Set the driver for the bot to chrome:
-
-`python main.py --url URL --driver chrome`
-
-Set the driver for the bot to firefox:
-
-`python main.py --url URL --driver firefox`
+| Argument                        | Description                                           | Default value                  |
+| :---                            | :---                                                  | :---                           |
+| -h<br>--help                    | Shows help message.                                   |                                |
+| -t T<br>--threads T             | Sets the number of threads to **T**.                  | 15                             |
+| -d S<br>--duration S            | Sets the duration of view to **S** seconds.           | Video duration.                |
+| -p PATH<br>--proxies PATH       | Sets the path to the list of proxies to **PATH**.     | Proxies list from internet.    |
+| -us AGENT<br>--user-agent AGENT | Sets the user agent to **AGENT**.                     | Randomly generated user agent. |
+| -us PATH<br>--user-agent PATH   | Sets the path to the list of user agents to **PATH**. |                                |
+| -dr DRIVER<br>--driver DRIVER   | Sets the webdriver to **DRIVER**.                     | Chrome.                        |
+| -hd<br>--headless               | Sets the webdriver as headless.                       | False.                         |
 
 ## Disclaimer
 
