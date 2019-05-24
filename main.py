@@ -10,7 +10,7 @@ from traceback import print_exc
 from collections import deque
 from fake_useragent import UserAgent
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException,WebDriverException
+from selenium.common.exceptions import TimeoutException,WebDriverException,NoSuchWindowException
 from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
@@ -85,7 +85,9 @@ def bot(id):
 					driver.quit()
 				except TimeoutException:
 					print('[WARNING][%d] Request timed out!'%id)
-			except WebDriverException:pass
+				except NoSuchWindowException:
+					print('[ERROR][%d] Window has been closed unexpectedly!'%id)
+			except WebDriverException:exit(1)
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
 
