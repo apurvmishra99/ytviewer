@@ -67,7 +67,7 @@ def bot():
 					firefox_profile.update_preferences()
 					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options,service_log_path=devnull)
 				driver.set_window_size(320,570)
-				driver.set_page_load_timeout(120);
+				driver.set_page_load_timeout(120)
 				try:
 					driver.get(url)
 					if not 'ERR_' in driver.page_source:
@@ -76,9 +76,9 @@ def bot():
 							player=driver.execute_script("return document.getElementById('movie_player');")
 						driver.execute_script("arguments[0].setVolume(0);",player)
 						sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+					driver.quit()
 				except TimeoutException:pass
 			except WebDriverException:pass
-			driver.quit()
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
 
