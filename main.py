@@ -30,7 +30,7 @@ def exit(exit_code):
 def update_proxies():
 	global proxies
 	if args.proxies:
-		proxies=open(args.proxies,'r').read().split('\n')
+		proxies=list(filter(None,open(args.proxies,'r').read().split('\n')))
 	else:
 		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
 		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
