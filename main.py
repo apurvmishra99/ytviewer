@@ -99,11 +99,11 @@ def bot(id):
 						print('[INFO][%d] Video successfully viewed!'%id)
 					else:
 						print('[WARNING][%d] Dead proxy eliminated!'%id)
-					driver.quit()
 				except TimeoutException:
 					print('[WARNING][%d] Request timed out!'%id)
 				except NoSuchWindowException:
 					print('[ERROR][%d] Window has been closed unexpectedly!'%id)
+				driver.quit()
 			except WebDriverException:exit(1)
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
