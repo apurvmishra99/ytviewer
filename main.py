@@ -35,16 +35,17 @@ def update_proxies():
 		proxies=re.findall(re.compile('<td>([\d.]+)</td>'),str(requests.get('https://www.sslproxies.org/').content))
 		proxies=['%s:%s'%x for x in list(zip(proxies[0::2],proxies[1::2]))]
 	proxies=deque(proxies)
-	print('%d proxies successfully loaded!'%len(proxies))
-def bot():
+	print('[INFO][0] %d proxies successfully loaded!'%len(proxies))
+def bot(id):
 	try:
 		while True:
 			url=choice(urls)
 			if len(proxies)==0:
 				update_proxies()
 			proxy=proxies.pop()
-			print(proxy)
+			print('[INFO][%d] Connecting to %s'%(id,proxy))
 			user_agent=choice(user_agents) if args.user_agent else user_agents.random
+			print('[INFO][%d] Setting user agent to %s'%(id,user_agent))
 			try:
 				if args.driver=='chrome':
 					chrome_options=webdriver.ChromeOptions()
@@ -66,16 +67,19 @@ def bot():
 					firefox_profile.set_preference('network.proxy.ssl_port',proxy.split(':')[1])
 					firefox_profile.update_preferences()
 					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options,service_log_path=devnull)
+				print('[INFO][%d] Successully started webdriver!'%id)
 				driver.set_window_size(320,570)
 				driver.set_page_load_timeout(120)
 				try:
 					driver.get(url)
+					print('[INFO][%d] Video successfully loaded!'%id)
 					if not 'ERR_' in driver.page_source:
 						player=None
 						while player is None:
 							player=driver.execute_script("return document.getElementById('movie_player');")
 						driver.execute_script("arguments[0].setVolume(0);",player)
 						sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+						print('[INFO] Video successfully viewed!'%id)
 					driver.quit()
 				except TimeoutException:pass
 			except WebDriverException:pass
@@ -98,7 +102,7 @@ try:
 	else:
 		user_agents=UserAgent()
 	for i in range(args.threads):
-		t=Thread(target=bot)
+		t=Thread(target=bot,args=(i+1,))
 		t.daemon=True
 		t.start()
 		sleep(uniform(2.0,4.0))
