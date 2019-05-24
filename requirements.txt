@@ -1,4 +1,5 @@
 requests
 argparse
 selenium
+colorama
 fake-useragent

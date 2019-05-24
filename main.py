@@ -1,9 +1,10 @@
 import re
 import requests
 from os import _exit,path,devnull
-from sys import stdin
+from sys import stdin,stdout
 from time import sleep
 from random import choice,uniform
+from colorama import Fore
 from argparse import ArgumentParser
 from threading import Thread
 from traceback import print_exc
@@ -27,6 +28,14 @@ def exit(exit_code):
 	if exit_code!=0:
 		print_exc()
 	_exit(exit_code)
+def print(message):
+	if message.startswith('[ERROR]'):
+		colour=Fore.RED
+	elif message.startswith('[WARNING]'):
+		colour=Fore.YELLOW
+	elif message.startswith('[INFO]'):
+		colour=Fore.GREEN
+	stdout.write('%s%s%s\n'%(colour,message,Fore.RESET))
 def update_proxies():
 	global proxies
 	if args.proxies:
