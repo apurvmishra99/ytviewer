@@ -83,7 +83,8 @@ def bot(id):
 					else:
 						print('[WARNING][%d] Dead proxy eliminated!'%id)
 					driver.quit()
-				except TimeoutException:pass
+				except TimeoutException:
+					print('[WARNING][%d] Request timed out!'%id)
 			except WebDriverException:pass
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
