@@ -72,14 +72,16 @@ def bot(id):
 				driver.set_page_load_timeout(120)
 				try:
 					driver.get(url)
-					print('[INFO][%d] Video successfully loaded!'%id)
 					if not 'ERR_' in driver.page_source:
+						print('[INFO][%d] Video successfully loaded!'%id)
 						player=None
 						while player is None:
 							player=driver.execute_script("return document.getElementById('movie_player');")
 						driver.execute_script("arguments[0].setVolume(0);",player)
 						sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
-						print('[INFO] Video successfully viewed!'%id)
+						print('[INFO][%d] Video successfully viewed!'%id)
+					else:
+						print('[WARNING][%d] Dead proxy eliminated!'%id)
 					driver.quit()
 				except TimeoutException:pass
 			except WebDriverException:pass
