@@ -35,6 +35,8 @@ def print(message):
 		colour=Fore.YELLOW
 	elif message.startswith('[INFO]'):
 		colour=Fore.GREEN
+	else:
+		colour=Fore.RESET
 	stdout.write('%s%s%s\n'%(colour,message,Fore.RESET))
 def update_proxies():
 	global proxies
@@ -83,11 +85,17 @@ def bot(id):
 					driver.get(url)
 					if not 'ERR_' in driver.page_source:
 						print('[INFO][%d] Video successfully loaded!'%id)
-						player=None
-						while player is None:
-							player=driver.execute_script("return document.getElementById('movie_player');")
-						driver.execute_script("arguments[0].setVolume(0);",player)
-						sleep(args.duration or float(driver.execute_script("return arguments[0].getDuration()",player)+uniform(1.0,5.0)))
+						mute_button=driver.find_element_by_class_name('ytp-mute-button')
+						if mute_button.get_attribute('title')=='Mute (m)':
+							mute_button.click()
+						play_button=driver.find_element_by_class_name('ytp-play-button')
+						if play_button.get_attribute('title')=='Play (k)':
+							play_button.click()
+						if args.duration:
+							sleep(args.duration)
+						else:
+							video_duration=driver.find_element_by_class_name('ytp-time-duration').get_attribute('innerHTML')
+							sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])])))
 						print('[INFO][%d] Video successfully viewed!'%id)
 					else:
 						print('[WARNING][%d] Dead proxy eliminated!'%id)
