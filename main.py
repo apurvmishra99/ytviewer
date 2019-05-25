@@ -61,7 +61,7 @@ def bot(id):
 				if args.driver=='chrome':
 					chrome_options=webdriver.ChromeOptions()
 					chrome_options.add_argument('--proxy-server={}'.format(proxy))
-					chrome_options.add_argument('user-agent="{}"'.format(user_agent))
+					chrome_options.add_argument('--user-agent={}'.format(user_agent))
 					if args.headless:
 						chrome_options.add_argument('--headless')
 					driver=webdriver.Chrome(options=chrome_options)
