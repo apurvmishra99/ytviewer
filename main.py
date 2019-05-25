@@ -12,7 +12,6 @@ from collections import deque
 from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException,WebDriverException,NoSuchWindowException,NoSuchElementException
-from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
 parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
