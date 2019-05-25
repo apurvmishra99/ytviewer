@@ -11,7 +11,7 @@ from traceback import print_exc
 from collections import deque
 from fake_useragent import UserAgent
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException,WebDriverException,NoSuchWindowException
+from selenium.common.exceptions import TimeoutException,WebDriverException,NoSuchWindowException,NoSuchElementException
 from selenium.webdriver.common.proxy import Proxy,ProxyType
 
 parser=ArgumentParser()
