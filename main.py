@@ -103,6 +103,8 @@ def bot(id):
 					print('[WARNING][%d] Request timed out!'%id)
 				except NoSuchWindowException:
 					print('[ERROR][%d] Window has been closed unexpectedly!'%id)
+				except NoSuchElementException:
+					print('[ERROR][%d] Element not found!'%id)
 				driver.quit()
 			except WebDriverException:exit(1)
 	except KeyboardInterrupt:exit(0)
