@@ -65,18 +65,18 @@ def bot(id):
 						chrome_options.add_argument('--headless')
 					driver=webdriver.Chrome(options=chrome_options)
 				else:
-					options=webdriver.FirefoxOptions()
+					firefox_options=webdriver.FirefoxOptions()
+					firefox_options.preferences.update({
+						'general.useragent.override':user_agent,
+						'network.proxy.type':1,
+						'network.proxy.http':proxy.split(':')[0],
+						'network.proxy.http_port':int(proxy.split(':')[1]),
+						'network.proxy.ssl':proxy.split(':')[0],
+						'network.proxy.ssl_port':int(proxy.split(':')[1])
+					})
 					if args.headless:
-						options.add_argument('--headless')
-					firefox_profile=webdriver.FirefoxProfile()
-					firefox_profile.set_preference('general.useragent.override',user_agent)
-					firefox_profile.set_preference('network.proxy.type',1)
-					firefox_profile.set_preference('network.proxy.http',proxy.split(':')[0])
-					firefox_profile.set_preference('network.proxy.http_port',int(proxy.split(':')[1]))
-					firefox_profile.set_preference('network.proxy.ssl',proxy.split(':')[0])
-					firefox_profile.set_preference('network.proxy.ssl_port',int(proxy.split(':')[1]))
-					firefox_profile.update_preferences()
-					driver=webdriver.Firefox(firefox_profile=firefox_profile,options=options,service_log_path=devnull)
+						firefox_options.add_argument('--headless')
+					driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull)
 				print('[INFO][%d] Successully started webdriver!'%id)
 				driver.set_window_size(320,570)
 				driver.set_page_load_timeout(120)
