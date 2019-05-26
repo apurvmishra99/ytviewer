@@ -8,8 +8,8 @@ from colorama import Fore
 from argparse import ArgumentParser
 from threading import Thread
 from traceback import print_exc
+from user_agent import generate_user_agent
 from collections import deque
-from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException,WebDriverException,NoSuchWindowException,NoSuchElementException
 
@@ -54,7 +54,7 @@ def bot(id):
 				update_proxies()
 			proxy=proxies.pop()
 			print('[INFO][%d] Connecting to %s'%(id,proxy))
-			user_agent=choice(user_agents) if args.user_agent else user_agents.random
+			user_agent=choice(user_agents) if args.user_agent else user_agents()
 			print('[INFO][%d] Setting user agent to %s'%(id,user_agent))
 			try:
 				if args.driver=='chrome':
@@ -123,7 +123,7 @@ try:
 		else:
 			user_agents=[args.user_agent]
 	else:
-		user_agents=UserAgent()
+		user_agents=generate_user_agent
 	for i in range(args.threads):
 		t=Thread(target=bot,args=(i+1,))
 		t.daemon=True
