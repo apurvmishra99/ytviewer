@@ -77,12 +77,14 @@ def bot(lock,drivers,exceptions,urls,user_agents,proxies,id):
 					chrome_options=webdriver.ChromeOptions()
 					chrome_options.add_argument('--proxy-server={}'.format(proxy))
 					chrome_options.add_argument('--user-agent={}'.format(user_agent))
+					chrome_options.add_argument('--mute-audio')
 					if args.headless:
 						chrome_options.add_argument('--headless')
 					driver=webdriver.Chrome(options=chrome_options)
 				else:
 					firefox_options=webdriver.FirefoxOptions()
 					firefox_options.preferences.update({
+						'media.volume_scale':'0.0',
 						'general.useragent.override':user_agent,
 						'network.proxy.type':1,
 						'network.proxy.http':proxy.split(':')[0],
@@ -107,11 +109,8 @@ def bot(lock,drivers,exceptions,urls,user_agents,proxies,id):
 				driver.get(url)
 				if not 'ERR_' in driver.page_source:
 					print('[INFO][%d] Video successfully loaded!'%id)
-					mute_button=driver.find_element_by_class_name('ytp-mute-button')
-					while mute_button.get_attribute('title')=='Mute (m)':
-						mute_button.click()
 					play_button=driver.find_element_by_class_name('ytp-play-button')
-					while play_button.get_attribute('title')=='Play (k)':
+					if play_button.get_attribute('title')=='Play (k)':
 						play_button.click()
 					if args.duration:
 						sleep(args.duration)
@@ -127,6 +126,8 @@ def bot(lock,drivers,exceptions,urls,user_agents,proxies,id):
 				print('[ERROR][%d] Window has been closed unexpectedly!'%id)
 			except NoSuchElementException:
 				print('[ERROR][%d] Element not found!'%id)
+			except ElementNotVisibleException:
+				print('[ERROR][%d] Element is not visible!'%id)
 			except ElementClickInterceptedException:
 				print('[ERROR][%d] Element could not be clicked!'%id)
 			finally:
