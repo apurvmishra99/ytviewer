@@ -82,6 +82,7 @@ def bot(id):
 				driver.set_window_size(320,570)
 				driver.set_page_load_timeout(120)
 				try:
+					print('[INFO][%d] Opening %s'%(id,url))
 					driver.get(url)
 					if not 'ERR_' in driver.page_source:
 						print('[INFO][%d] Video successfully loaded!'%id)
