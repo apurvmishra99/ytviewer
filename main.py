@@ -138,10 +138,7 @@ def bot(lock,drivers,exceptions,urls,user_agents,proxies,id):
 					drivers.remove(pid)
 				lock.release()
 	except KeyboardInterrupt:pass
-	except Exception as e:
-		lock.acquire()
-		exceptions.append(format_exc())
-		lock.release()
+	except Exception as e:exceptions.append(format_exc())
 
 if __name__=='__main__':
 	try:
