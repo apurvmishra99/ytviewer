@@ -130,10 +130,10 @@ def bot(lock,args,urls,user_agents,proxies,drivers,exceptions,id):
 if __name__=='__main__':
 	try:
 		parser=ArgumentParser()
-		parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
+		parser.add_argument('-p','--processes',type=int,help='set the number of processes',default=15)
 		parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
 		parser.add_argument('-d','--duration',help='set the duration of the view in seconds',type=float)
-		parser.add_argument('-p','--proxies',help='set the path to list of proxies')
+		parser.add_argument('-pr','--proxies',help='set the path to list of proxies')
 		parser.add_argument('-us','--user-agent',help='set the user agent/set the path of to the list of user agents')
 		parser.add_argument('-dr','--driver',help='set the webdriver',choices=['chrome','firefox'],default='chrome')
 		parser.add_argument('-hd','--headless',help='set the webdriver as headless',action='store_true')
@@ -157,8 +157,8 @@ if __name__=='__main__':
 		drivers=manager.list()
 		exceptions=manager.list()
 		proxies=manager.list()
-		pool=Pool(processes=args.threads)
-		pool.map_async(partial(bot,lock,args,urls,user_agents,proxies,drivers,exceptions),range(1,args.threads+1))
+		pool=Pool(processes=args.processes)
+		pool.map_async(partial(bot,lock,args,urls,user_agents,proxies,drivers,exceptions),range(1,args.processes+1))
 		while True:
 			if len(exceptions)>0:
 				for e in exceptions:
