@@ -98,6 +98,8 @@ def bot(id):
 					play_button=driver.find_element_by_class_name('ytp-play-button')
 					if play_button.get_attribute('title')=='Play (k)':
 						play_button.click()
+					if play_button.get_attribute('title')=='Play (k)':
+						raise ElementClickInterceptedException
 					if args.duration:
 						sleep(args.duration)
 					else:
