@@ -5,7 +5,7 @@ import requests
 from os import _exit,path,devnull
 from sys import stdout
 from time import sleep
-from random import choice
+from random import seed,choice
 from colorama import Fore
 from argparse import ArgumentParser
 from traceback import format_exc,print_exc
@@ -132,6 +132,7 @@ def bot(id):
 
 if __name__=='__main__':
 	try:
+		seed()
 		parser=ArgumentParser()
 		parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
 		parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
