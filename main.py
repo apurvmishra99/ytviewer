@@ -54,7 +54,7 @@ def bot(id):
 				proxy=choice(proxies)
 				proxies.remove(proxy)
 			print('[INFO][%d] Connecting to %s'%(id,proxy))
-			user_agent=choice(user_agents) if args.user_agent else user_agents()
+			user_agent=choice(user_agents) if args.user_agent else user_agents(os=('win','android'))
 			print('[INFO][%d] Setting user agent to %s'%(id,user_agent))
 			try:
 				if args.slow_start:
@@ -89,8 +89,7 @@ def bot(id):
 				if args.slow_start:
 					locks[1].release()
 				print('[INFO][%d] Successully started webdriver!'%id)
-				driver.set_window_size(320,570)
-				driver.set_page_load_timeout(30)
+				driver.set_page_load_timeout(45)
 				print('[INFO][%d] Opening %s'%(id,url))
 				driver.get(url)
 				if not 'ERR_' in driver.page_source:
