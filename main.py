@@ -117,8 +117,6 @@ def bot(id):
 				print('[ERROR][%d] Element is not visible!'%id)
 			except ElementClickInterceptedException:
 				print('[ERROR][%d] Element could not be clicked!'%id)
-			except WebDriverException:
-				print('[ERROR][%d] Webdriver error occured!'%id)
 			finally:
 				with locks[2]:
 					print('[INFO][%d] Quitting webdriver!'%id)
