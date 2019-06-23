@@ -27,10 +27,8 @@
 
 - [Content](#content)
 - [Prerequisites](#prerequisites)
-  - [Windows](#Prerequisites-Windows)
+  - [Windows](#windows)
 - [Installation](#installation)
-  - [Windows](#Installation-Windows)
-  - [Linux & MacOS](#Linux&MacOS)
 - [Usage](#usage)
 - [Documentation](#documentation)
   - [Required arguments](#required-arguments)
@@ -42,7 +40,11 @@
 
 ## Prerequisites
 
-### <a name="Prerequisites-Windows">Windows
+### Windows
+
+Install Python: https://www.python.org/downloads/
+
+And
 
 Install **Google Chrome Browser**: https://www.google.com/chrome/
 
@@ -56,23 +58,10 @@ Download **geckodriver**, unzip and move the executable to folder in your **PATH
 
 ## Installation
 
-### <a name="Installation-Windows">Windows
-
-Install Python: https://www.python.org/downloads/
-
 ```
 git clone "https://github.com/DeBos99/ytviewer.git"
 cd ytviewer
-install.bat
-cd ..
-```
-
-### <a name="Linux&MacOS">Linux & MacOS
-
-```
-git clone "https://github.com/DeBos99/ytviewer.git"
-cd ytviewer
-./install.sh
+python install.py
 cd ..
 ```
 
@@ -91,18 +80,19 @@ cd ..
 
 ### Optional arguments
 
-| Argument                        | Description                                           | Default value                  |
-| :---                            | :---                                                  | :---                           |
-| -h<br>--help                    | Shows help message.                                   |                                |
-| -t T<br>--threads T             | Sets the number of threads to **T**.                  | 15                             |
-| -d S<br>--duration S            | Sets the duration of view to **S** seconds.           | Video duration.                |
-| -p PATH<br>--proxies PATH       | Sets the path to the list of proxies to **PATH**.     | Proxies list from internet.    |
-| -U AGENT<br>--user-agent AGENT  | Sets the user agent to **AGENT**.                     | Randomly generated user agent. |
-| -U PATH<br>--user-agent PATH    | Sets the path to the list of user agents to **PATH**. |                                |
-| -dr DRIVER<br>--driver DRIVER   | Sets the webdriver to **DRIVER**.                     | Chrome.                        |
-| -D<br>--debug                   | Enables debug mode.                                   | False.                         |
-| -H<br>--headless                | Sets the webdriver as headless.                       | False.                         |
-| -s<br>--slow-start              | Starts webdrivers one by one.                         | False.                         |
+| Argument                       | Description                                           | Default value                  |
+| :---                           | :---                                                  | :---                           |
+| -h<br>--help                   | Shows help message.                                   |                                |
+| -t T<br>--threads T            | Sets the number of threads to **T**.                  | 15                             |
+| -du S<br>--duration S          | Sets the duration of view to **S** seconds.           | Video duration.                |
+| -p PATH<br>--proxies PATH      | Sets the path to the list of proxies to **PATH**.     | Proxies list from internet.    |
+| -U AGENT<br>--user-agent AGENT | Sets the user agent to **AGENT**.                     | Randomly generated user agent. |
+| -U PATH<br>--user-agent PATH   | Sets the path to the list of user agents to **PATH**. |                                |
+| -D DRIVER<br>--driver DRIVER   | Sets the webdriver to **DRIVER**.                     | Chrome.                        |
+| -d<br>--debug                  | Enables debug mode.                                   | False.                         |
+| -dd                            | Changes all warnings to errors                        | False.                         |
+| -H<br>--headless               | Sets the webdriver as headless.                       | False.                         |
+| -s<br>--slow-start             | Starts webdrivers one by one.                         | False.                         |
 
 ## Disclaimer
 

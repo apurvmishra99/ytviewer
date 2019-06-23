@@ -1,50 +1,63 @@
-from __future__ import print_function
 import re
+import os
 import psutil
+import argparse
 import requests
 from os import _exit,path,devnull
 from sys import stdout
 from time import sleep
-from random import seed,choice
-from colorama import Fore
+from random import choice
 from argparse import ArgumentParser
 from traceback import format_exc,print_exc
-from threading import Thread,Lock,Event
+from threading import Thread,Lock,Event,enumerate as list_threads
 from user_agent import generate_user_agent
 from selenium import webdriver
 from selenium.common.exceptions import *
 
 def exit(exit_code):
-	global drivers
-	if exit_code==1:
-		print_exc()
-	try:drivers
+	global args,drivers,locks
+	try:args
 	except NameError:pass
 	else:
-		for driver in drivers:
-			try:psutil.Process(driver).terminate()
-			except:pass
-	_exit(exit_code)
-def print(message):
+		try:
+			with locks[3]:
+				try:drivers
+				except NameError:pass
+				else:
+					for driver in drivers:
+						try:psutil.Process(driver).terminate()
+						except:pass
+		except:pass
+		finally:
+			if exit_code:
+				print_exc()
+			stdout.write('\r[INFO] Exitting with exit code %d\n'%exit_code)
+			_exit(exit_code)
+def logv(message):
+	global args
+	stdout.write('%s\n'%message)
 	if message.startswith('[ERROR]'):
-		colour=Fore.RED
-	elif message.startswith('[WARNING]'):
-		colour=Fore.YELLOW
-	elif message.startswith('[INFO]'):
-		colour=Fore.GREEN
-	else:
-		colour=Fore.RESET
-	stdout.write('%s%s%s\n'%(colour,message,Fore.RESET))
+		exit(1)
+	if args.debug==2:
+		if message.startswith('[WARNING]'):
+			exit(1)
+def log(message):
+	global args
+	if args.debug:
+		logv(message)
+def is_root():
+	try:return not os.geteuid()
+	except:return False
 def get_proxies():
 	global args
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().strip().split('\n')
 	else:
 		proxies=requests.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite').content.decode().strip().split('\r\n')
-	print('[INFO][0] %d proxies successfully loaded!'%len(proxies))
+	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
-	global args,locks,exception,exception_event,urls,user_agents,proxies
+	global args,locks,urls,user_agents,proxies
 	while True:
 		try:
 			url=choice(urls)
@@ -53,101 +66,90 @@ def bot(id):
 					proxies.extend(get_proxies())
 				proxy=choice(proxies)
 				proxies.remove(proxy)
-			print('[INFO][%d] Connecting to %s'%(id,proxy))
+			log('[INFO][%d] Connecting to %s'%(id,proxy))
 			user_agent=choice(user_agents) if args.user_agent else user_agents(os=('win','android'))
-			print('[INFO][%d] Setting user agent to %s'%(id,user_agent))
-			try:
-				if args.slow_start:
-					locks[1].acquire()
-				if args.driver=='chrome':
-					chrome_options=webdriver.ChromeOptions()
-					chrome_options.add_argument('--proxy-server={}'.format(proxy))
-					chrome_options.add_argument('--user-agent={}'.format(user_agent))
-					chrome_options.add_argument('--mute-audio')
-					if args.headless:
-						chrome_options.add_argument('--headless')
-					driver=webdriver.Chrome(options=chrome_options)
+			log('[INFO][%d] Setting user agent to %s'%(id,user_agent))
+			if args.slow_start:
+				locks[1].acquire()
+			if args.driver=='chrome':
+				chrome_options=webdriver.ChromeOptions()
+				chrome_options.add_argument('--proxy-server={}'.format(proxy))
+				chrome_options.add_argument('--user-agent={}'.format(user_agent))
+				chrome_options.add_argument('--mute-audio')
+				if args.headless:
+					chrome_options.add_argument('--headless')
+				if is_root():
+					chrome.options.add_argument('--no-sandbox')
+				driver=webdriver.Chrome(options=chrome_options)
+			else:
+				firefox_options=webdriver.FirefoxOptions()
+				firefox_options.preferences.update({
+					'media.volume_scale':'0.0',
+					'general.useragent.override':user_agent,
+					'network.proxy.type':1,
+					'network.proxy.http':proxy.split(':')[0],
+					'network.proxy.http_port':int(proxy.split(':')[1]),
+					'network.proxy.ssl':proxy.split(':')[0],
+					'network.proxy.ssl_port':int(proxy.split(':')[1])
+				})
+				if args.headless:
+					firefox_options.add_argument('--headless')
+				driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull)
+			process=driver.service.process
+			pid=process.pid
+			cpids=[x.pid for x in psutil.Process(pid).children()]
+			pids=[pid]+cpids
+			drivers.extend(pids)
+			if args.slow_start:
+				locks[1].release()
+			log('[INFO][%d] Successully started webdriver!'%id)
+			driver.set_page_load_timeout(45)
+			log('[INFO][%d] Opening %s'%(id,url))
+			driver.get(url)
+			if not 'ERR_' in driver.page_source:
+				logv('[INFO][%d] Video successfully loaded!'%id)
+				play_button=driver.find_element_by_class_name('ytp-play-button')
+				if play_button.get_attribute('title')=='Play (k)':
+					play_button.click()
+				if play_button.get_attribute('title')=='Play (k)':
+					raise ElementClickInterceptedException
+				if args.duration:
+					sleep(args.duration)
 				else:
-					firefox_options=webdriver.FirefoxOptions()
-					firefox_options.preferences.update({
-						'media.volume_scale':'0.0',
-						'general.useragent.override':user_agent,
-						'network.proxy.type':1,
-						'network.proxy.http':proxy.split(':')[0],
-						'network.proxy.http_port':int(proxy.split(':')[1]),
-						'network.proxy.ssl':proxy.split(':')[0],
-						'network.proxy.ssl_port':int(proxy.split(':')[1])
-					})
-					if args.headless:
-						firefox_options.add_argument('--headless')
-					driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull)
-				process=driver.service.process
-				pid=process.pid
-				cpids=[x.pid for x in psutil.Process(pid).children()]
-				pids=[pid]+cpids
-				drivers.extend(pids)
-				if args.slow_start:
-					locks[1].release()
-				print('[INFO][%d] Successully started webdriver!'%id)
-				driver.set_page_load_timeout(45)
-				print('[INFO][%d] Opening %s'%(id,url))
-				driver.get(url)
-				if not 'ERR_' in driver.page_source:
-					print('[INFO][%d] Video successfully loaded!'%id)
-					play_button=driver.find_element_by_class_name('ytp-play-button')
-					if play_button.get_attribute('title')=='Play (k)':
-						play_button.click()
-					if play_button.get_attribute('title')=='Play (k)':
-						raise ElementClickInterceptedException
-					if args.duration:
-						sleep(args.duration)
-					else:
-						video_duration=driver.find_element_by_class_name('ytp-time-duration').get_attribute('innerHTML')
-						sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])])))
-					print('[INFO][%d] Video successfully viewed!'%id)
+					video_duration=driver.find_element_by_class_name('ytp-time-duration').get_attribute('innerHTML')
+					sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])])))
+				logv('[INFO][%d] Video successfully viewed!'%id)
+			else:
+				log('[INFO][%d] Dead proxy eliminated!'%id)
+		except WebDriverException as e:
+			log('[WARNING][%d] %s'%(id,e.__class__.__name__))
+			if args.debug==2:
+				exit(3)
+		except KeyboardInterrupt:exit(0)
+		except:exit(2)
+		finally:
+			log('[INFO][%d] Quitting webdriver!'%id)
+			try:driver
+			except NameError:pass
+			else:driver.quit()
+			with locks[2]:
+				try:pids
+				except NameError:pass
 				else:
-					print('[WARNING][%d] Dead proxy eliminated!'%id)
-			except TimeoutException:
-				print('[WARNING][%d] Request timed out!'%id)
-			except NoSuchWindowException:
-				print('[ERROR][%d] Window has been closed unexpectedly!'%id)
-			except NoSuchElementException:
-				print('[ERROR][%d] Element not found!'%id)
-			except ElementNotVisibleException:
-				print('[ERROR][%d] Element is not visible!'%id)
-			except ElementClickInterceptedException:
-				print('[ERROR][%d] Element could not be clicked!'%id)
-			finally:
-				with locks[2]:
-					print('[INFO][%d] Quitting webdriver!'%id)
-					try:driver
-					except NameError:pass
-					else:driver.quit()
-					try:pids
-					except NameError:pass
-					else:
-						for pid in pids:
-							try:drivers.remove(pid)
-							except:pass
-		except KeyboardInterrupt:pass
-		except:
-			if args.debug:
-				with locks[3]:
-					exception=format_exc()
-					exception_event.set()
-			else:print('[ERROR][%d] Unknown error occured!'%id)
+					for pid in pids:
+						try:drivers.remove(pid)
+						except:pass
 
 if __name__=='__main__':
 	try:
-		seed()
 		parser=ArgumentParser()
 		parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
 		parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
-		parser.add_argument('-d','--duration',help='set the duration of the view in seconds',type=float)
+		parser.add_argument('-du','--duration',help='set the duration of the view in seconds',type=float)
 		parser.add_argument('-p','--proxies',help='set the path to list of proxies')
 		parser.add_argument('-U','--user-agent',help='set the user agent/set the path of to the list of user agents')
-		parser.add_argument('-dr','--driver',help='set the webdriver',choices=['chrome','firefox'],default='chrome')
-		parser.add_argument('-D','--debug',help='enable debug mode',action='store_true')
+		parser.add_argument('-D','--driver',help='set the webdriver',choices=['chrome','firefox'],default='chrome')
+		parser.add_argument('-d','--debug',help='enable debug mode',action='count')
 		parser.add_argument('-H','--headless',help='set the webdriver as headless',action='store_true')
 		parser.add_argument('-s','--slow-start',help='start webdrivers one by one',action='store_true')
 		args=parser.parse_args()
@@ -165,15 +167,14 @@ if __name__=='__main__':
 		else:
 			user_agents=generate_user_agent
 		locks=[Lock() for _ in range(4)]
-		exception_event=Event()
 		drivers=[]
 		proxies=[]
 		for i in range(args.threads):
 			t=Thread(target=bot,args=(i+1,))
 			t.daemon=True
 			t.start()
-		exception_event.wait()
-		print(exception)
-		exit(2)
+		for t in list_threads()[1:]:
+			t.join()
+	except SystemExit as e:exit(int(str(e)))
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)
