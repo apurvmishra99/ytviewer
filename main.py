@@ -8,29 +8,26 @@ from sys import stdout
 from time import sleep
 from random import choice
 from argparse import ArgumentParser
-from traceback import format_exc,print_exc
-from threading import Thread,Lock,Event,enumerate as list_threads
+from traceback import print_exc
+from threading import Thread,Lock,enumerate as list_threads
 from user_agent import generate_user_agent
 from selenium import webdriver
 from selenium.common.exceptions import *
 
 def exit(exit_code):
-	global args,drivers,locks
-	try:args
-	except NameError:pass
-	else:
-		try:
-			with locks[3]:
-				try:drivers
-				except NameError:pass
-				else:
-					for driver in drivers:
-						try:psutil.Process(driver).terminate()
-						except:pass
-		except:pass
-		finally:
-			if exit_code:
-				print_exc()
+	global drivers,locks
+	try:
+		with locks[3]:
+			try:drivers
+			except NameError:pass
+			else:
+				for driver in drivers:
+					try:psutil.Process(driver).terminate()
+					except:pass
+	except:pass
+	finally:
+		if exit_code:
+			print_exc()
 			stdout.write('\r[INFO] Exitting with exit code %d\n'%exit_code)
 			_exit(exit_code)
 def logv(message):
