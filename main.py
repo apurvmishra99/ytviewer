@@ -22,13 +22,13 @@ def logv(message):
 	try:args
 	except NameError:pass
 	else:
-		if args.debug==2:
+		if args.debug:
 			if message.startswith('[WARNING]'):
 				exit(1)
 
 if __name__=='__main__':
-	from sys import stdout
 	from os import _exit
+	from sys import stdout
 	from traceback import print_exc
 	while True:
 		try:
@@ -58,7 +58,7 @@ if __name__=='__main__':
 
 def log(message):
 	global args
-	if args.debug:
+	if args.verbose:
 		logv(message)
 def is_root():
 	try:return not os.geteuid()
@@ -133,7 +133,7 @@ def bot(id):
 			driver.set_page_load_timeout(45)
 			log('[INFO][%d] Opening %s'%(id,url))
 			driver.get(url)
-			if not 'ERR_' in driver.page_source:
+			if driver.title.endswith('YouTube'):
 				logv('[INFO][%d] Video successfully loaded!'%id)
 				play_button=driver.find_element_by_class_name('ytp-play-button')
 				if play_button.get_attribute('title')=='Play (k)':
@@ -150,10 +150,8 @@ def bot(id):
 				log('[INFO][%d] Dead proxy eliminated!'%id)
 		except WebDriverException as e:
 			log('[WARNING][%d] %s'%(id,e.__class__.__name__))
-			if args.debug==2:
-				exit(3)
 		except KeyboardInterrupt:exit(0)
-		except:exit(2)
+		except:exit(1)
 		finally:
 			log('[INFO][%d] Quitting webdriver!'%id)
 			try:driver
@@ -170,18 +168,18 @@ def bot(id):
 if __name__=='__main__':
 	try:
 		parser=ArgumentParser()
-		parser.add_argument('-V','--version',action='version',version='YTViewer 2.0')
 		parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
 		parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
 		parser.add_argument('-du','--duration',help='set the duration of the view in seconds',type=float)
 		parser.add_argument('-p','--proxies',help='set the path to list of proxies')
 		parser.add_argument('-U','--user-agent',help='set the user agent/set the path of to the list of user agents')
 		parser.add_argument('-D','--driver',help='set the webdriver',choices=['chrome','firefox'],default='chrome')
-		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
 		parser.add_argument('-v','--verbose',help='enable verbose mode',action='store_true')
+		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
 		parser.add_argument('-H','--headless',help='set the webdriver as headless',action='store_true')
 		parser.add_argument('-s','--slow-start',help='start webdrivers one by one',action='store_true')
 		args=parser.parse_args()
+		args.verbose=args.debug or args.verbose
 		if args.url:
 			if isfile(args.url):
 				urls=open(args.url,'r').read().strip().split('\n')

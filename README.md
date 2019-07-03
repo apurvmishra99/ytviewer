@@ -73,8 +73,8 @@ Install **Mozilla Firefox Browser**: https://www.mozilla.org/en-US/firefox/new/
 | -U AGENT<br>--user-agent AGENT | Sets the user agent to **AGENT**.                     | Randomly generated user agent. |
 | -U PATH<br>--user-agent PATH   | Sets the path to the list of user agents to **PATH**. |                                |
 | -D DRIVER<br>--driver DRIVER   | Sets the webdriver to **DRIVER**.                     | Chrome.                        |
+| -v<br>--verbose                | Enables verbose mode.                                 | False.                         |
 | -d<br>--debug                  | Enables debug mode.                                   | False.                         |
-| -dd                            | Changes all warnings to errors                        | False.                         |
 | -H<br>--headless               | Sets the webdriver as headless.                       | False.                         |
 | -s<br>--slow-start             | Starts webdrivers one by one.                         | False.                         |
 
