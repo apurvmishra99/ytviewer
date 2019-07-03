@@ -1,8 +1,6 @@
 # YTViewer
 
 ![Made with Python](https://img.shields.io/badge/made%20with-python-0.svg?color=cc2020&labelColor=ff3030&logo=python&logoColor=white&style=for-the-badge)
-![Made with Bash](https://img.shields.io/badge/made%20with-bash-0.svg?color=cc2020&labelColor=ff3030&style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB2ZXJzaW9uPSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNTEyIDI1NmEyNTUgMjU1IDAgMCAxLTI4IDExNyAyNDkgMjQ5IDAgMCAxLTczIDg3IDI1NiAyNTYgMCAwIDEtODkgNDMgMjQ4IDI0OCAwIDAgMS0xMDYgNkEyNTMgMjUzIDAgMCAxIDI1IDM2N2EyNTYgMjU2IDAgMSAxIDQ4Ny0xMTF6IiBmaWxsPSIjZjJmMmYyIi8%2BPGcgZmlsbD0iIzJkM2EzZSI%2BPHBhdGggZD0iTTQ0NSA0MjVsLTE0NCA4MyAyMS01YzEyLTMgMjItNiAzMy0xMWw1Ni0zMmEyNTggMjU4IDAgMCAwIDQyLTQxbC04IDZ6bTctMzAyTDI5NiAzM2E3NyA3NyAwIDAgMC03NiAwTDY0IDEyM2E3NyA3NyAwIDAgMC0zOSA2N3YxNzdjMTYgMzMgMzkgNjIgNjcgODVsNzcgNDVjMTUgNSAzMSA5IDQ3IDEyTDcwIDQyNWE2NCA2NCAwIDAgMS0zMS01NVYxOTBjMC0yMyAxMi00NCAzMS01NWwxNTYtOTBhNjMgNjMgMCAwIDEgNjQgMGwxNTUgOTBhNjQgNjQgMCAwIDEgMzIgNTV2MTgwYzAgNy0xIDE1LTQgMjJsMTEtMTkgNi0xNFYxOTBjMC0yNy0xNC01My0zOC02N3oiLz48cGF0aCBkPSJNNDg0IDE5MHYxODNhMjQ5IDI0OSAwIDAgMS00NyA2NGwtMTE1IDY2YTI0OCAyNDggMCAwIDEtNzEgOWwtMi0xMVYzMjFjMC0yNSAxMy00OCAzNS02MWwxNTYtOTAgOC00YTI2IDI2IDAgMCAxIDM2IDI0eiIvPjwvZz48cGF0aCBkPSJNMzQ4IDM4NWMwLTE4LTE2LTE4LTI0LTE4cy0xMy0zLTEzLTExIDEwLTIwIDI4LTE3bDctMThzLTgtMS0xOCAxdi0xN2wtMTUgOXYxNWMtOSA2LTE3IDE5LTE3IDQxIDAgMTAgNSAyMCAyMiAyMCAxNiAwIDE3IDE1IDggMjMtOSA5LTI5IDktMjkgOWwtMiAyMHM4IDAgMTgtM3YxN2wxNS05di0xNWMxMS04IDIxLTIyIDIwLTQ3eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGZpbGw9IiMzMWI2NDQiIGQ9Ik00MTMgNDA5bC00MyAyOXYtMTZsNDMtMjh6Ii8%2BPC9zdmc%2B)
-![Made with Batch](https://img.shields.io/badge/made%20with-batch-0.svg?color=cc2020&labelColor=ff3030&style=for-the-badge)
 
 ![GitHub](https://img.shields.io/github/license/DeBos99/ytviewer.svg?color=2020cc&labelColor=5050ff&style=for-the-badge)
 ![GitHub followers](https://img.shields.io/github/followers/DeBos99.svg?color=2020cc&labelColor=5050ff&style=for-the-badge)
@@ -28,7 +26,6 @@
 - [Content](#content)
 - [Prerequisites](#prerequisites)
   - [Windows](#windows)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
   - [Required arguments](#required-arguments)
@@ -48,22 +45,9 @@ And
 
 Install **Google Chrome Browser**: https://www.google.com/chrome/
 
-Download **ChromeDriver** and move the executable to folder in your **PATH**: http://chromedriver.chromium.org/downloads
-
 Or
 
 Install **Mozilla Firefox Browser**: https://www.mozilla.org/en-US/firefox/new/
-
-Download **geckodriver**, unzip and move the executable to folder in your **PATH**: https://github.com/mozilla/geckodriver/releases
-
-## Installation
-
-```
-git clone "https://github.com/DeBos99/ytviewer.git"
-cd ytviewer
-python install.py
-cd ..
-```
 
 ## Usage
 

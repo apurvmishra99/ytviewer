@@ -1,19 +1,3 @@
-import re
-import os
-import psutil
-import argparse
-import requests
-from os import _exit,path,devnull
-from sys import stdout
-from time import sleep
-from random import choice
-from argparse import ArgumentParser
-from traceback import print_exc
-from threading import Thread,Lock,enumerate as list_threads
-from user_agent import generate_user_agent
-from selenium import webdriver
-from selenium.common.exceptions import *
-
 def exit(exit_code):
 	global drivers,locks
 	try:
@@ -22,22 +6,56 @@ def exit(exit_code):
 			except NameError:pass
 			else:
 				for driver in drivers:
-					try:psutil.Process(driver).terminate()
+					try:Process(driver).terminate()
 					except:pass
 	except:pass
 	finally:
 		if exit_code:
 			print_exc()
-			stdout.write('\r[INFO] Exitting with exit code %d\n'%exit_code)
-			_exit(exit_code)
+		stdout.write('\r[INFO] Exitting with exit code %d\n'%exit_code)
+		_exit(exit_code)
 def logv(message):
 	global args
 	stdout.write('%s\n'%message)
 	if message.startswith('[ERROR]'):
 		exit(1)
-	if args.debug==2:
-		if message.startswith('[WARNING]'):
-			exit(1)
+	try:args
+	except NameError:pass
+	else:
+		if args.debug==2:
+			if message.startswith('[WARNING]'):
+				exit(1)
+
+if __name__=='__main__':
+	from sys import stdout
+	from os import _exit
+	from traceback import print_exc
+	while True:
+		try:
+			import re
+			import os
+			from os import devnull,environ
+			from os.path import isfile,join as path_join
+			from time import sleep
+			from random import choice
+			from psutil import Process
+			from platform import system
+			from argparse import ArgumentParser
+			from requests import get as requests_get
+			from threading import Thread,Lock,enumerate as list_threads
+			from user_agent import generate_user_agent
+			from selenium import webdriver
+			from selenium.common.exceptions import WebDriverException
+			break
+		except:
+			try:INSTALLED
+			except NameError:
+				try:from urllib import urlopen
+				except:from urllib.request import urlopen
+				argv=['YTViewer',True]
+				exec(urlopen('https://raw.githubusercontent.com/DeBos99/multi-installer/master/install.py').read().decode())
+			else:exit(1)
+
 def log(message):
 	global args
 	if args.debug:
@@ -50,7 +68,7 @@ def get_proxies():
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().strip().split('\n')
 	else:
-		proxies=requests.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite').content.decode().strip().split('\r\n')
+		proxies=requests_get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite').content.decode().strip().split('\r\n')
 	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
@@ -68,6 +86,10 @@ def bot(id):
 			log('[INFO][%d] Setting user agent to %s'%(id,user_agent))
 			if args.slow_start:
 				locks[1].acquire()
+			if system()=='Windows':
+				executable_dir=path_join(environ['APPDATA'],'DeBos','drivers')
+			else:
+				executable_dir=path_join(environ['HOME'],'.DeBos','drivers')
 			if args.driver=='chrome':
 				chrome_options=webdriver.ChromeOptions()
 				chrome_options.add_argument('--proxy-server={}'.format(proxy))
@@ -77,7 +99,11 @@ def bot(id):
 					chrome_options.add_argument('--headless')
 				if is_root():
 					chrome.options.add_argument('--no-sandbox')
-				driver=webdriver.Chrome(options=chrome_options)
+				if system()=='Windows':
+					executable_path=path_join(executable_dir,'chromedriver.exe')
+				else:
+					executable_path=path_join(executable_dir,'chromedriver')
+				driver=webdriver.Chrome(options=chrome_options,executable_path=executable_path)
 			else:
 				firefox_options=webdriver.FirefoxOptions()
 				firefox_options.preferences.update({
@@ -91,10 +117,14 @@ def bot(id):
 				})
 				if args.headless:
 					firefox_options.add_argument('--headless')
-				driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull)
+				if system()=='Windows':
+					executable_path=path_join(executable_dir,'geckodriver.exe')
+				else:
+					executable_path=path_join(executable_dir,'geckodriver')
+				driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull,executable_path=executable_path)
 			process=driver.service.process
 			pid=process.pid
-			cpids=[x.pid for x in psutil.Process(pid).children()]
+			cpids=[x.pid for x in Process(pid).children()]
 			pids=[pid]+cpids
 			drivers.extend(pids)
 			if args.slow_start:
@@ -140,24 +170,26 @@ def bot(id):
 if __name__=='__main__':
 	try:
 		parser=ArgumentParser()
+		parser.add_argument('-V','--version',action='version',version='YTViewer 2.0')
 		parser.add_argument('-t','--threads',type=int,help='set the number of threads',default=15)
 		parser.add_argument('-u','--url',help='set url of the video/set the path of the urls list',default='',required=True)
 		parser.add_argument('-du','--duration',help='set the duration of the view in seconds',type=float)
 		parser.add_argument('-p','--proxies',help='set the path to list of proxies')
 		parser.add_argument('-U','--user-agent',help='set the user agent/set the path of to the list of user agents')
 		parser.add_argument('-D','--driver',help='set the webdriver',choices=['chrome','firefox'],default='chrome')
-		parser.add_argument('-d','--debug',help='enable debug mode',action='count')
+		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
+		parser.add_argument('-v','--verbose',help='enable verbose mode',action='store_true')
 		parser.add_argument('-H','--headless',help='set the webdriver as headless',action='store_true')
 		parser.add_argument('-s','--slow-start',help='start webdrivers one by one',action='store_true')
 		args=parser.parse_args()
 		if args.url:
-			if path.isfile(args.url):
+			if isfile(args.url):
 				urls=open(args.url,'r').read().strip().split('\n')
 			else:
 				urls=[args.url]
 		urls=[re.sub(r'\A(?:https?://)?(.*)\Z',r'https://\1',x) for x in urls]
 		if args.user_agent:
-			if path.isfile(args.user_agent):
+			if isfile(args.user_agent):
 				user_agents=open(args.user_agent,'r').read().strip().split('\n')
 			else:
 				user_agents=[args.user_agent]

@@ -2,5 +2,4 @@ psutil
 requests[security]
 argparse
 selenium
-colorama
 user_agent
