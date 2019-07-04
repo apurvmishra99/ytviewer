@@ -72,7 +72,7 @@ def get_proxies():
 	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
-	global args,locks,urls,user_agents,proxies
+	global args,locks,urls,user_agents,proxies,drivers
 	while True:
 		try:
 			url=choice(urls)
