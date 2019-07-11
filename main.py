@@ -45,7 +45,7 @@ if __name__=='__main__':
 			from threading import Thread,Lock,enumerate as list_threads
 			from user_agent import generate_user_agent
 			from selenium import webdriver
-			from selenium.common.exceptions import WebDriverException
+			from selenium.common.exceptions import ElementClickInterceptedException,WebDriverException
 			break
 		except:
 			try:INSTALLED
