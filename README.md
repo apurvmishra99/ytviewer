@@ -24,8 +24,13 @@
 ## Content
 
 - [Content](#content)
-- [Prerequisites](#prerequisites)
+- [Installation](#installation)
   - [Windows](#windows)
+  - [Unix](#unix)
+    - [Debian/Ubuntu](#apt)
+    - [Arch Linux/Manjaro](#pacman)
+    - [CentOS](#yum)
+    - [MacOS](#homebrew)
 - [Usage](#usage)
 - [Documentation](#documentation)
   - [Required arguments](#required-arguments)
@@ -35,19 +40,53 @@
 - [Contact](#contact)
 - [License](#license)
 
-## Prerequisites
+## Installation
 
 ### Windows
 
-Install Python: https://www.python.org/downloads/
+* Install [Git](https://git-scm.com/download/win).
+* Install [Python](https://www.python.org/downloads/).
+* Install [Google Chrome](https://www.google.com/chrome/).
+<br>Or
+<br>Install [Firefox](https://www.mozilla.org/firefox/new/).
+* Run following command in the command prompt:
+```
+git clone "https://github.com/DeBos99/ytviewer.git"
+```
 
-And
+### Unix
 
-Install **Google Chrome Browser**: https://www.google.com/chrome/
+#### <a name="APT">Debian/Ubuntu based
 
-Or
+* Run following commands in the terminal:
+```
+sudo apt install git python -y
+git clone "https://github.com/DeBos99/ytviewer.git"
+```
 
-Install **Mozilla Firefox Browser**: https://www.mozilla.org/en-US/firefox/new/
+#### <a name="Pacman">Arch Linux/Manjaro
+
+* Run following commands in the terminal:
+```
+sudo pacman -S git python --noconfirm
+git clone "https://github.com/DeBos99/ytviewer.git"
+```
+
+#### <a name="YUM">CentOS
+
+* Run following commands in the terminal:
+```
+sudo yum install git python -y
+git clone "https://github.com/DeBos99/ytviewer.git"
+```
+
+#### <a name="Homebrew">MacOS
+
+* Run following commands in the terminal:
+```
+brew install git python
+git clone "https://github.com/DeBos99/ytviewer.git"
+```
 
 ## Usage
 
@@ -58,20 +97,20 @@ Install **Mozilla Firefox Browser**: https://www.mozilla.org/en-US/firefox/new/
 ### Required arguments
 
 | Argument              | Description                                    |
-| :---                  | :---                                           |
+| :-------------------- | :--------------------------------------------- |
 | -u URL<br>--url URL   | Sets the url of video to **URL**.              |
 | -u PATH<br>--url PATH | Sets the path to the list of urls to **PATH**. |
 
 ### Optional arguments
 
 | Argument                       | Description                                           | Default value                  |
-| :---                           | :---                                                  | :---                           |
+| :----------------------------- | :---------------------------------------------------- | :----------------------------- |
 | -h<br>--help                   | Shows help message.                                   |                                |
 | -t T<br>--threads T            | Sets the number of threads to **T**.                  | 15                             |
 | -du S<br>--duration S          | Sets the duration of view to **S** seconds.           | Video duration.                |
 | -p PATH<br>--proxies PATH      | Sets the path to the list of proxies to **PATH**.     | Proxies list from internet.    |
 | -U AGENT<br>--user-agent AGENT | Sets the user agent to **AGENT**.                     | Randomly generated user agent. |
-| -U PATH<br>--user-agent PATH   | Sets the path to the list of user agents to **PATH**. |                                |
+| -U PATH<br>--user-agent PATH   | Sets the path to the list of user agents to **PATH**. | Randomly generated user agent. |
 | -D DRIVER<br>--driver DRIVER   | Sets the webdriver to **DRIVER**.                     | Chrome.                        |
 | -v<br>--verbose                | Enables verbose mode.                                 | False.                         |
 | -d<br>--debug                  | Enables debug mode.                                   | False.                         |
