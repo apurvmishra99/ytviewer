@@ -24,6 +24,7 @@
 ## Content
 
 - [Content](#content)
+- [Features](#features)
 - [Installation](#installation)
   - [Windows](#windows)
   - [Unix](#unix)
@@ -39,6 +40,17 @@
 - [Authors](#authors)
 - [Contact](#contact)
 - [License](#license)
+
+## features
+
+* Multi-threaded.
+* Support for multiple URLs.
+* Configurable view duration.
+* IP and User agent rotation.
+* Support for chromedriver and geckodriver.
+* 3 modes of verbosity.
+* Headless mode.
+* Slow start mode for older machines.
 
 ## Installation
 
