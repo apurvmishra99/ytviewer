@@ -38,7 +38,7 @@ if __name__=='__main__':
 			from os.path import isfile,join as path_join
 			from time import sleep
 			from random import choice,uniform
-			from psutil import Process
+			from psutil import Process,NoSuchProcess
 			from platform import system
 			from argparse import ArgumentParser
 			from requests import get as requests_get
@@ -151,6 +151,8 @@ def bot(id):
 				log('[INFO][%d] Dead proxy eliminated!'%id)
 		except WebDriverException as e:
 			log('[WARNING][%d] %s'%(id,e.__class__.__name__))
+		except NoSuchProcess:
+			log('[WARNING][%d] NoSuchProcess'%id)
 		except KeyboardInterrupt:exit(0)
 		except:exit(1)
 		finally:
