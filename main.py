@@ -37,7 +37,7 @@ if __name__=='__main__':
 			from os import devnull,environ
 			from os.path import isfile,join as path_join
 			from time import sleep
-			from random import choice
+			from random import choice,uniform
 			from psutil import Process
 			from platform import system
 			from argparse import ArgumentParser
@@ -145,7 +145,7 @@ def bot(id):
 					sleep(args.duration)
 				else:
 					video_duration=driver.find_element_by_class_name('ytp-time-duration').get_attribute('innerHTML')
-					sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])])))
+					sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])]))*uniform(0.35,0.85))
 				logv('[INFO][%d] Video successfully viewed!'%id)
 			else:
 				log('[INFO][%d] Dead proxy eliminated!'%id)
