@@ -1,5 +1,6 @@
 *
 !.gitignore
+!CONTRIBUTORS.md
 !LICENSE
 !main.py
 !README.md
