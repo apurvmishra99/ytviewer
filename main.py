@@ -14,17 +14,10 @@ def exit(exit_code):
 			print_exc()
 		stdout.write('\r[INFO] Exitting with exit code %d\n'%exit_code)
 		_exit(exit_code)
-def logv(message):
+def log(message):
 	global args
-	stdout.write('%s\n'%message)
-	if message.startswith('[ERROR]'):
-		exit(1)
-	try:args
-	except NameError:pass
-	else:
-		if args.debug:
-			if message.startswith('[WARNING]'):
-				exit(1)
+	if args.debug:
+		stdout.write('%s\n'%message)
 
 if __name__=='__main__':
 	from os import _exit
@@ -45,7 +38,10 @@ if __name__=='__main__':
 			from threading import Thread,Lock,enumerate as list_threads
 			from user_agent import generate_user_agent
 			from selenium import webdriver
-			from selenium.common.exceptions import ElementClickInterceptedException,WebDriverException
+			from selenium.common.exceptions import WebDriverException
+			from selenium.webdriver.common.by import By
+			from selenium.webdriver.support import expected_conditions as EC
+			from selenium.webdriver.support.wait import WebDriverWait
 			break
 		except:
 			try:INSTALLED
@@ -56,10 +52,6 @@ if __name__=='__main__':
 				exec(urlopen('https://raw.githubusercontent.com/DeBos99/multi-installer/master/install.py').read().decode())
 			else:exit(1)
 
-def log(message):
-	global args
-	if args.verbose:
-		logv(message)
 def is_root():
 	try:return not os.geteuid()
 	except:return False
@@ -72,7 +64,7 @@ def get_proxies():
 	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
-	global args,locks,urls,user_agents,proxies,drivers
+	global args,locks,urls,user_agents,proxies,drivers,watched_videos
 	while True:
 		try:
 			url=choice(urls)
@@ -135,18 +127,22 @@ def bot(id):
 			log('[INFO][%d] Opening %s'%(id,url))
 			driver.get(url)
 			if driver.title.endswith('YouTube'):
-				logv('[INFO][%d] Video successfully loaded!'%id)
-				play_button=driver.find_element_by_class_name('ytp-play-button')
-				if play_button.get_attribute('title')=='Play (k)':
-					play_button.click()
-				if play_button.get_attribute('title')=='Play (k)':
-					raise ElementClickInterceptedException
+				log('[INFO][%d] Video successfully loaded!'%id)
+				try:
+					WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.CLASS_NAME,'ytp-large-play-button'))).click()
+				except:pass
+				sleep(1)
+				video=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'html5-main-video')))
+				if not video.get_attribute('controls'):
+					sleep(float(driver.execute_script('return arguments[0].getDuration()',video))+1)
 				if args.duration:
 					sleep(args.duration)
 				else:
-					video_duration=driver.find_element_by_class_name('ytp-time-duration').get_attribute('innerHTML')
-					sleep(float(sum([int(x)*60**i for i,x in enumerate(video_duration.split(':')[::-1])]))*uniform(0.35,0.85))
-				logv('[INFO][%d] Video successfully viewed!'%id)
+					video=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'html5-main-video')))
+					video_duration=driver.execute_script('return arguments[0].getDuration()',video)
+					sleep(float(video_duration)*uniform(0.35,0.85))
+				log('[INFO][%d] Video successfully viewed!'%id)
+				watched_videos+=1
 			else:
 				log('[INFO][%d] Dead proxy eliminated!'%id)
 		except WebDriverException as e:
@@ -171,18 +167,17 @@ def bot(id):
 if __name__=='__main__':
 	try:
 		parser=ArgumentParser()
-		parser.add_argument('-t','--threads',type=int,help='set number of threads',default=15)
 		parser.add_argument('-u','--url',help='set url of video/set path to file with urls',default='',required=True)
+		parser.add_argument('-t','--threads',help='set number of threads',type=int,default=15)
+		parser.add_argument('-D','--driver',help='set webdriver',choices=['chrome','firefox'],default='chrome')
+		parser.add_argument('-H','--headless',help='enable headless mode',action='store_true')
+		parser.add_argument('-s','--slow-start',help='enable slow start mode',action='store_true')
 		parser.add_argument('-du','--duration',help='set duration of view in seconds',type=float)
 		parser.add_argument('-p','--proxies',help='set path to file with proxies')
 		parser.add_argument('-U','--user-agent',help='set user agent/set path to file with user agents')
-		parser.add_argument('-D','--driver',help='set webdriver',choices=['chrome','firefox'],default='chrome')
-		parser.add_argument('-v','--verbose',help='enable verbose mode',action='store_true')
 		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
-		parser.add_argument('-H','--headless',help='enable headless mode',action='store_true')
-		parser.add_argument('-s','--slow-start',help='enable slow start mode',action='store_true')
+		parser.add_argument('-r','--refresh',help='set refresh rate for logger in seconds',type=float,default=1.0)
 		args=parser.parse_args()
-		args.verbose=args.debug or args.verbose
 		if args.url:
 			if isfile(args.url):
 				urls=open(args.url,'r').read().strip().split('\n')
@@ -197,14 +192,24 @@ if __name__=='__main__':
 		else:
 			user_agents=generate_user_agent
 		locks=[Lock() for _ in range(4)]
+		logger_lock=Lock()
 		drivers=[]
 		proxies=[]
+		watched_videos=0
 		for i in range(args.threads):
 			t=Thread(target=bot,args=(i+1,))
 			t.daemon=True
 			t.start()
-		for t in list_threads()[1:]:
-			t.join()
+		if args.debug:
+			for t in list_threads()[1:]:
+				t.join()
+		else:
+			while True:
+				with logger_lock:
+					print('\n'*100)
+					stdout.write('Watched videos: %d'%watched_videos)
+					stdout.flush()
+				sleep(args.refresh)
 	except SystemExit as e:exit(int(str(e)))
 	except KeyboardInterrupt:exit(0)
 	except:exit(1)

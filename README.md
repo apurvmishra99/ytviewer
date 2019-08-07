@@ -45,12 +45,12 @@
 
 * Multi-threaded.
 * Support for multiple URLs.
-* Configurable view duration.
-* IP and User agent rotation.
-* Support for chromedriver and geckodriver.
-* 3 modes of verbosity.
+* Support for ChromeDriver and GeckoDriver.
 * Headless mode.
 * Slow start mode for older machines.
+* Configurable view duration.
+* IP and User agent rotation.
+* Debug mode.
 
 ## Installation
 
@@ -119,15 +119,14 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 | :--------------------- | :---------------------------------- | :----------------------------- |
 | -h, --help             | Shows help message and exits.       |                                |
 | -t, --threads N        | Sets number of threads.             | 15                             |
+| -D, --driver DRIVER    | Sets webdriver.                     | chrome                         |
+| -H, --headless         | Enables headless mode.              | False                          |
+| -s, --slow-start       | Enables slow start mode.            | False                          |
 | -du, --duration N      | Sets duration of view in seconds.   | Video duration.                |
 | -p, --proxies PATH     | Sets path to file with proxies.     | Proxies list from internet.    |
 | -U, --user-agent AGENT | Sets user agent.                    | Randomly generated user agent. |
 | -U, --user-agent PATH  | Sets path to file with user agents. | Randomly generated user agent. |
-| -D, --driver DRIVER    | Sets webdriver.                     | chrome                         |
-| -v, --verbose          | Enables verbose mode.               | False                          |
 | -d, --debug            | Enables debug mode.                 | False                          |
-| -H, --headless         | Enables headless mode.              | False                          |
-| -s, --slow-start       | Enables slow start mode.            | False                          |
 
 ## Disclaimer
 
