@@ -16,8 +16,11 @@ def exit(exit_code):
 		_exit(exit_code)
 def log(message):
 	global args
-	if args.debug:
-		stdout.write('%s\n'%message)
+	try:args
+	except NameError:pass
+	else:
+		if args.debug:
+			stdout.write('%s\n'%message)
 
 if __name__=='__main__':
 	from os import _exit
