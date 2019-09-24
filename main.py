@@ -40,7 +40,7 @@ if __name__=='__main__':
 			from requests import get as requests_get
 			from threading import Thread,Lock,enumerate as list_threads
 			from user_agent import generate_user_agent
-			from selenium import webdriver
+			from seleniumwire import webdriver
 			from selenium.common.exceptions import WebDriverException
 			from selenium.webdriver.common.by import By
 			from selenium.webdriver.support import expected_conditions as EC
@@ -67,7 +67,7 @@ def get_proxies():
 	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
-	global args,locks,urls,user_agents,proxies,drivers,watched_videos
+	global args,locks,urls,user_agents,referers,proxies,drivers,watched_videos
 	while True:
 		try:
 			url=choice(urls)
@@ -118,6 +118,9 @@ def bot(id):
 				else:
 					executable_path=path_join(executable_dir,'geckodriver')
 				driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull,executable_path=executable_path)
+			driver.header_overrides={
+				'Referer':choice(referers)
+			}
 			process=driver.service.process
 			pid=process.pid
 			cpids=[x.pid for x in Process(pid).children()]
@@ -178,6 +181,7 @@ if __name__=='__main__':
 		parser.add_argument('-du','--duration',help='set duration of view in seconds',type=float)
 		parser.add_argument('-p','--proxies',help='set path to file with proxies')
 		parser.add_argument('-U','--user-agent',help='set user agent/set path to file with user agents')
+		parser.add_argument('-R','--referer',help='set referer/set path to file with referer',default='https://www.google.com')
 		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
 		parser.add_argument('-r','--refresh',help='set refresh rate for logger in seconds',type=float,default=1.0)
 		args=parser.parse_args()
@@ -194,6 +198,10 @@ if __name__=='__main__':
 				user_agents=[args.user_agent]
 		else:
 			user_agents=generate_user_agent
+		if isfile(args.referer):
+			referers=open(args.referer,'r').read().strip().split('\n')
+		else:
+			referers=[args.referer]
 		locks=[Lock() for _ in range(4)]
 		logger_lock=Lock()
 		drivers=[]
