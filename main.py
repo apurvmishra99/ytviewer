@@ -138,10 +138,6 @@ def bot(id):
 				try:
 					WebDriverWait(driver,3).until(EC.element_to_be_clickable((By.CLASS_NAME,'ytp-large-play-button'))).click()
 				except:pass
-				sleep(1)
-				video=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'html5-main-video')))
-				if not video.get_attribute('controls'):
-					sleep(float(driver.execute_script('return arguments[0].getDuration()',video))+1)
 				if args.duration:
 					sleep(args.duration)
 				else:
