@@ -52,7 +52,7 @@ if __name__=='__main__':
 				try:from urllib import urlopen
 				except:from urllib.request import urlopen
 				argv=['YTViewer',True]
-				exec(urlopen('https://raw.githubusercontent.com/DeBos99/multi-installer/master/install.py').read().decode())
+				exec(urlopen('https://gitlab.com/DeBos/multi-installer/raw/master/install.py').read().decode())
 			else:exit(1)
 
 def is_root():
