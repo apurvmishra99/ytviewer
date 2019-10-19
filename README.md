@@ -45,7 +45,7 @@
 <br>Install [Firefox](https://www.mozilla.org/firefox/new/).
 * Run following command in the command prompt:
 ```
-git clone "https://github.com/DeBos99/ytviewer.git"
+git clone "https://gitlab.com/DeBos/ytviewer.git"
 ```
 
 ### Unix
@@ -55,7 +55,7 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 * Run following commands in the terminal:
 ```
 sudo apt install git python -y
-git clone "https://github.com/DeBos99/ytviewer.git"
+git clone "https://gitlab.com/DeBos/ytviewer.git"
 ```
 
 #### <a name="Pacman">Arch Linux/Manjaro
@@ -63,7 +63,7 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 * Run following commands in the terminal:
 ```
 sudo pacman -S git python --noconfirm
-git clone "https://github.com/DeBos99/ytviewer.git"
+git clone "https://gitlab.com/DeBos/ytviewer.git"
 ```
 
 #### <a name="YUM">CentOS
@@ -71,7 +71,7 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 * Run following commands in the terminal:
 ```
 sudo yum install git python -y
-git clone "https://github.com/DeBos99/ytviewer.git"
+git clone "https://gitlab.com/DeBos/ytviewer.git"
 ```
 
 #### <a name="Homebrew">MacOS
@@ -79,7 +79,7 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 * Run following commands in the terminal:
 ```
 brew install git python
-git clone "https://github.com/DeBos99/ytviewer.git"
+git clone "https://gitlab.com/DeBos/ytviewer.git"
 ```
 
 ## Usage
@@ -121,7 +121,7 @@ git clone "https://github.com/DeBos99/ytviewer.git"
 
 * **Michał \<DeBos\> Wróblewski** - Main Developer - [DeBos](https://gitlab.com/DeBos)
 
-See also the list of [contributors](https://github.com/DeBos99/ytviewer/contributors) who participated in this project.
+See also the list of [contributors](https://gitlab.com/DeBos/ytviewer/contributors) who participated in this project.
 
 ## Contact
 
