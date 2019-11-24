@@ -9,10 +9,6 @@
 - [Installation](#installation)
   - [Windows](#windows)
   - [Unix](#unix)
-    - [Debian/Ubuntu](#apt)
-    - [Arch Linux/Manjaro](#pacman)
-    - [CentOS](#yum)
-    - [MacOS](#homebrew)
 - [Usage](#usage)
 - [Documentation](#documentation)
   - [Required arguments](#required-arguments)
@@ -45,41 +41,15 @@
 <br>Install [Firefox](https://www.mozilla.org/firefox/new/).
 * Run following command in the command prompt:
 ```
-git clone "https://gitlab.com/DeBos/ytviewer.git"
+git clone https://gitlab.com/DeBos/ytviewer.git
 ```
 
 ### Unix
 
-#### <a name="APT">Debian/Ubuntu based
-
 * Run following commands in the terminal:
 ```
-sudo apt install git python -y
-git clone "https://gitlab.com/DeBos/ytviewer.git"
-```
-
-#### <a name="Pacman">Arch Linux/Manjaro
-
-* Run following commands in the terminal:
-```
-sudo pacman -S git python --noconfirm
-git clone "https://gitlab.com/DeBos/ytviewer.git"
-```
-
-#### <a name="YUM">CentOS
-
-* Run following commands in the terminal:
-```
-sudo yum install git python -y
-git clone "https://gitlab.com/DeBos/ytviewer.git"
-```
-
-#### <a name="Homebrew">MacOS
-
-* Run following commands in the terminal:
-```
-brew install git python
-git clone "https://gitlab.com/DeBos/ytviewer.git"
+curl -fs https://gitlab.com/DeBos/mpt/raw/master/mpt.sh | sh -s install git python
+git clone https://gitlab.com/DeBos/ytviewer.git
 ```
 
 ## Usage
