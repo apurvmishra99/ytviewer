@@ -91,8 +91,6 @@ git clone https://gitlab.com/DeBos/ytviewer.git
 
 * **Michał \<DeBos\> Wróblewski** - Main Developer - [DeBos](https://gitlab.com/DeBos)
 
-See also the list of [contributors](https://gitlab.com/DeBos/ytviewer/contributors) who participated in this project.
-
 ## Contact
 
 * Discord: DeBos#3292
