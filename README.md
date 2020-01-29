@@ -89,7 +89,7 @@ git clone https://gitlab.com/DeBos/ytviewer.git
 
 ## Authors
 
-* **Michał \<DeBos\> Wróblewski** - Main Developer - [DeBos](https://gitlab.com/DeBos)
+* **Michał Wróblewski** - Main Developer - [DeBos](https://gitlab.com/DeBos)
 
 ## Contact
 
