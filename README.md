@@ -93,7 +93,7 @@ git clone https://gitlab.com/DeBos/ytviewer.git
 
 ## Contact
 
-* Discord: DeBos#3292
+* Telegram: [@DeBos99](https://t.me/DeBos99)
 * Reddit: [DeBos99](https://www.reddit.com/user/DeBos99)
 
 ## License
