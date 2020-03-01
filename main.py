@@ -19,8 +19,11 @@ def log(message):
 	try:args
 	except NameError:pass
 	else:
-		if args.debug:
+		if args.verbose:
 			stdout.write('%s\n'%message)
+			if args.debug:
+				if message.startswith('[%s]'%args.debug.upper()):
+					exit(1)
 
 if __name__=='__main__':
 	from os import _exit
@@ -179,7 +182,8 @@ if __name__=='__main__':
 		parser.add_argument('-p','--proxies',help='set path to file with proxies')
 		parser.add_argument('-U','--user-agent',help='set user agent/set path to file with user agents')
 		parser.add_argument('-R','--referer',help='set referer/set path to file with referer',default='https://www.google.com')
-		parser.add_argument('-d','--debug',help='enable debug mode',action='store_true')
+		parser.add_argument('-v','--verbose',help='enable verbose mode',action='store_true')
+		parser.add_argument('-d','--debug',help='enable debug mode')
 		parser.add_argument('-r','--refresh',help='set refresh rate for logger in seconds',type=float,default=1.0)
 		args=parser.parse_args()
 		if args.url:
@@ -199,24 +203,24 @@ if __name__=='__main__':
 			referers=open(args.referer,'r').read().strip().split('\n')
 		else:
 			referers=[args.referer]
+		if args.debug:
+			args.verbose=True
 		locks=[Lock() for _ in range(4)]
-		logger_lock=Lock()
 		drivers=[]
 		proxies=[]
-		watched_videos=0
 		for i in range(args.threads):
 			t=Thread(target=bot,args=(i+1,))
 			t.daemon=True
 			t.start()
-		if args.debug:
+		if args.verbose:
 			for t in list_threads()[1:]:
 				t.join()
 		else:
+			watched_videos=0
 			while True:
-				with logger_lock:
-					print('\n'*100)
-					stdout.write('Watched videos: %d'%watched_videos)
-					stdout.flush()
+				print('\n'*100)
+				stdout.write('Watched videos: %d'%watched_videos)
+				stdout.flush()
 				sleep(args.refresh)
 	except SystemExit as e:exit(int(str(e)))
 	except KeyboardInterrupt:exit(0)

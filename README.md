@@ -67,21 +67,22 @@ git clone https://gitlab.com/DeBos/ytviewer.git
 
 ### Optional arguments
 
-| Argument                      | Description                              | Default value                  |
-| :---------------------------- | :--------------------------------------- | :----------------------------- |
-| -h, --help                    | Shows help message and exits.            |                                |
-| -t, --threads N               | Sets number of threads.                  | 15                             |
-| -D, --driver {chrome,firefox} | Sets webdriver.                          | chrome                         |
-| -H, --headless                | Enables headless mode.                   | False                          |
-| -s, --slow-start              | Enables slow start mode.                 | False                          |
-| -du, --duration N             | Sets duration of view in seconds.        | Video duration.                |
-| -p, --proxies PATH            | Sets path to file with proxies.          | Proxies list from internet.    |
-| -U, --user-agent AGENT        | Sets user agent.                         | Randomly generated user agent. |
-| -U, --user-agent PATH         | Sets path to file with user agents.      |                                |
-| -R, --referer REFERER         | Sets referer.                            | https://google.com             |
-| -R, --referer PATH            | Sets path to file with referer.          |                                |
-| -d, --debug                   | Enables debug mode.                      | False                          |
-| -r, --refresh N               | Sets refresh rate for logger in seconds. | 1.0                            |
+| Argument                         | Description                              | Default value                  |
+| :------------------------------- | :--------------------------------------- | :----------------------------- |
+| -h, --help                       | Shows help message and exits.            |                                |
+| -t, --threads N                  | Sets number of threads.                  | 15                             |
+| -D, --driver <chrome \| firefox> | Sets webdriver.                          | chrome                         |
+| -H, --headless                   | Enables headless mode.                   | False                          |
+| -s, --slow-start                 | Enables slow start mode.                 | False                          |
+| -du, --duration N                | Sets duration of view in seconds.        | Video duration.                |
+| -p, --proxies PATH               | Sets path to file with proxies.          | Proxies list from internet.    |
+| -U, --user-agent AGENT           | Sets user agent.                         | Randomly generated user agent. |
+| -U, --user-agent PATH            | Sets path to file with user agents.      |                                |
+| -R, --referer REFERER            | Sets referer.                            | https://google.com             |
+| -R, --referer PATH               | Sets path to file with referer.          |                                |
+| -v, --verbose                    | Enables verbose mode.                    |                                |
+| -d, --debug <warning \| error>   | Enables debug mode.                      | False                          |
+| -r, --refresh N                  | Sets refresh rate for logger in seconds. | 1.0                            |
 
 ## Disclaimer
 
