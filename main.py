@@ -148,7 +148,8 @@ def bot(id):
 					video_duration=driver.execute_script('return arguments[0].getDuration()',video)
 					sleep(float(video_duration)*uniform(0.35,0.85))
 				log('[INFO][%d] Video successfully viewed!'%id)
-				watched_videos+=1
+				if not args.verbose:
+					watched_videos+=1
 			else:
 				log('[INFO][%d] Dead proxy eliminated!'%id)
 		except WebDriverException as e:
