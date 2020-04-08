@@ -27,8 +27,12 @@ def log(message):
 
 if __name__=='__main__':
 	from os import _exit
-	from sys import stdout
+	from sys import stdout,version_info
+	if version_info[0]<3:
+		print('Python 2 is not supported!')
+		exit(0)
 	from traceback import print_exc
+	from urllib.request import Request,urlopen
 	while True:
 		try:
 			import re
@@ -40,7 +44,6 @@ if __name__=='__main__':
 			from psutil import Process,NoSuchProcess
 			from platform import system
 			from argparse import ArgumentParser
-			from requests import get as requests_get
 			from threading import Thread,Lock,enumerate as list_threads
 			from user_agent import generate_user_agent
 			from seleniumwire import webdriver
@@ -52,10 +55,8 @@ if __name__=='__main__':
 		except:
 			try:INSTALLED
 			except NameError:
-				try:from urllib import urlopen
-				except:from urllib.request import urlopen
 				argv=['YTViewer',True]
-				exec(urlopen('https://gitlab.com/DeBos/multi-installer/raw/master/install.py').read().decode())
+				exec(urlopen(Request('https://gitlab.com/DeBos/multi-installer/raw/master/install.py',headers={'User-Agent':'DeBos/ytviewer'})).read().decode())
 			else:exit(1)
 
 def is_root():
@@ -66,7 +67,7 @@ def get_proxies():
 	if args.proxies:
 		proxies=open(args.proxies,'r').read().strip().split('\n')
 	else:
-		proxies=requests_get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite').content.decode().strip().split('\r\n')
+		proxies=urlopen(Request('https://www.proxy-list.download/api/v1/get?type=https&anon=elite',headers={'User-Agent':'DeBos/ytviewer'})).read().decode().strip().split('\r\n')
 	log('[INFO] %d proxies successfully loaded!'%len(proxies))
 	return proxies
 def bot(id):
